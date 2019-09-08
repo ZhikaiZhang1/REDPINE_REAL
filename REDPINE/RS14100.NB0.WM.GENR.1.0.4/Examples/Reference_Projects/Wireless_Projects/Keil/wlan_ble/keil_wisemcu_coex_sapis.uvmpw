@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>.\wlan_ap_ble_bridge\wlan_ap_ble_bridge.uvprojx</PathAndName>
+    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
+  </project>
+
+  <project>
+    <PathAndName>.\wlan_ap_ble_bridge_tcpipbypass\wlan_ap_ble_bridge_tcpipbypass.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\wlan_station_ble_bridge\wlan_station_ble_bridge.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+  <project>
+    <PathAndName>.\wlan_station_ble_dual_role_bridge\wlan_station_ble_dual_role_bridge.uvprojx</PathAndName>
+    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
+  </project>
+
+  <project>
+    <PathAndName>.\wlan_station_ble_multiple_slaves_bridge\wlan_station_ble_multiple_slaves_bridge.uvprojx</PathAndName>
+    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
+  </project>
+  
+  <project>
+    <PathAndName>.\wlan_station_ble_throughput_app\wlan_station_ble_throughput_app.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+</ProjectWorkspace>

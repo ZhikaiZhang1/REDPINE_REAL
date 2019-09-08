@@ -1,0 +1,9 @@
+*.o
+*.map
+*.hex
+*.asm
+*.dep
+*.bin
+*.htm
+*.axf
+*.crf

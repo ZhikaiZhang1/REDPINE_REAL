@@ -1,0 +1,6 @@
+total 16
+-rw-r--r-- 1 root root    0 Mar  1 16:35 1
+drwxr-xr-x 2 root root 4096 Mar  1 15:19 aes_encry_decry
+drwxr-xr-x 2 root root 4096 Mar  1 15:19 puf_config
+drwxr-xr-x 3 root root 4096 Mar  1 15:19 puf_demo
+drwxr-xr-x 2 root root 4096 Mar  1 15:19 puf_key_aes

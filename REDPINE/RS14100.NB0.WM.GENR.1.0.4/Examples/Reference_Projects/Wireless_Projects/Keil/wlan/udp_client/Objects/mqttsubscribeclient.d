@@ -1,0 +1,11 @@
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTSubscribeClient.c
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTPacket.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTConnect.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTPublish.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTSubscribe.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTUnsubscribe.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTFormat.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\StackTrace.h
+.\objects\mqttsubscribeclient.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\mqttsubscribeclient.o: ..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src\MQTTPacket.h
+.\objects\mqttsubscribeclient.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

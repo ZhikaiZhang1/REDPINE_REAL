@@ -1,0 +1,16 @@
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\Peripheral_Library\driver\src\rsi_fim_filterScalar.c
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\Peripheral_Library\driver\inc\rsi_fim.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\base_types.h
+.\objects\rsi_fim_filterscalar.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\rsi_fim_filterscalar.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\rsi_fim_filterscalar.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\rsi_fim_filterscalar.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\rsi_error.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\RS1xxxx.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\cmsis\core_cm4.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\cmsis\core_cmInstr.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\cmsis\core_cmFunc.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\cmsis\core_cm4_simd.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\RS1xxxx.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\system_RS1xxxx.h
+.\objects\rsi_fim_filterscalar.o: ..\..\..\..\..\COMMON\chip\inc\rsi_error.h

@@ -1,0 +1,11 @@
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\Wireless_Examples\wlan\dhcp_dns_fqdn\rsi_dhcp_dns_fqdn.c
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_data_types.h
+.\objects\rsi_dhcp_dns_fqdn.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_common_apis.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_wlan_apis.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_socket.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_bootup_config.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_error.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_os.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_nwk.h
+.\objects\rsi_dhcp_dns_fqdn.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_utils.h

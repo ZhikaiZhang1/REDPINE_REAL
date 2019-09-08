@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>.\blinky\blinky.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\can\can.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\cci_master\cci_master.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\cci_slave\cci_slave.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\comparator\comparator.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\crc\crc.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\ct\ct.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\efuse\efuse.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\ethernet\ethernet.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+  </project>
+
+  <project>
+    <PathAndName>.\freeRTOS\freeRTOS.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\fim\fim.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\gspi\gspi.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\i2c\i2c.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\i2s\i2s.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\ir_decoder\ir_decoder.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\m4_pin_interrupt\m4_pin_interrupt.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\opamp\opamp.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\pwm\pwm.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\qei\qei.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\rng\rng.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\gpdma\gpdma.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\rtc\rtc.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\sio\sio.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\soc_pll_freq_measurement\soc_pll_freq_measurement.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\spi\spi.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\timers\timers.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\uart\uart.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\udma\udma.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\ulp_pin_interrupt\ulp_pin_interrupt.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\usart_master\usart_master.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\usart_slave\usart_slave.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\wdt\wdt.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\bjt_temp_sensor\temp_sensor.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\bod\bod.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\battery_status\battery_status.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\blackout\blackout.uvprojx</PathAndName>
+  </project>
+
+</ProjectWorkspace>

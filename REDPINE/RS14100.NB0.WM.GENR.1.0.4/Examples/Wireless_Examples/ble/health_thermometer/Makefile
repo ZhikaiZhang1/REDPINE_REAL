@@ -1,0 +1,25 @@
+# Make File
+
+rm=/bin/rm -f
+CC= cc
+DEFS=  
+PROGNAME= rsi_wc_app
+LINKS= -lpthread -L../../../build/ -lrps
+PATH_CONFIG=$(shell pwd)
+
+RSI_DRIVER_PATH = ../../../include
+CFLAGS+=  -I$(RSI_DRIVER_PATH)/
+CFLAGS+=  -I$(PATH_CONFIG)/
+CFLAGS+= -D RSI_SAMPLE_HAL
+CFLAGS+= -D RSI_BLE_ENABLE
+BLE_APP = rsi_ble_health_thermometer.o 
+
+all: $(BLE_APP) 
+
+	make ble CC=$(CC) -C ../../../build/ path_config=$(PATH_CONFIG) 
+	$(CC) $(CFLAGS) -lm *.o $(LINKS) -o $(PROGNAME) 
+	rm -f  *.o  
+
+
+clean:
+	$(rm) $(BLE_APP) core *.o *~

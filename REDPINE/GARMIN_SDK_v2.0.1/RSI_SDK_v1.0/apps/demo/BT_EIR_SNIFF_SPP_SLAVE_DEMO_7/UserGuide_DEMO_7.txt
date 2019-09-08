@@ -1,0 +1,29 @@
+BT_EIR_SNIFF_SPP_SLAVE_DEMO_7 
+=============================
+Prerequisite:
+-------------
+1. Connect FRDM-K28F and Redpine Module with SPI as per FRDM-K28F_RS9116EVK_Connections.txt [File path:- RSI_WSDK_vX/doc/FRDM-K28F_RS9116EVK_Connections.txt]
+
+2. Flash RS9116_WC_SI.rps [File path:- RSI_WSDK_vX/RS9116_Firmware/RS9116_WC_SI.rps] into Redpine Module.
+
+3. Power on FRDM-K28F and RS9116 [Redpine Module].
+
+Steps to execute demo:
+---------------------
+1. Select demo from 'rsi_common_app.h'. [File path:- RSI_WSDK_vX/source/sapis/examples/rsi_demo_apps/inc/rsi_common_app.h]
+	-> Set 'BT_EIR_SNIFF_SPP_SLAVE' to 1 in 'rsi_common_app.h'
+NOTE:
+-----
+Make sure to set remaining all demo Macros to 0
+
+2. Compile the project and flash the binary onto FRDM-K28
+	
+3. Start FRDM-K28, demo application starts executing and respective prints are displayed on serial console.
+
+4. Refer to "EIR_SPP Slave_Sniff Test Procedure_1.0.pdf" for throughput test procedure.
+
+================================================================================================================================================
+Steps to Enable Powersave
+-------------------------
+In 'rsi_bt_config_DEMO_7.h',
+-> Set ENABLE_POWER_SAVE to 1

@@ -1,0 +1,579 @@
+Release            : RS14100.SW.1.0.4
+ Software Component : WiSeMCU 
+ Date               : 22 Oct 2018
+_______________________________________________________________
+ 	Copyright (C) Redpine Signals, Inc 2018
+_______________________________________________________________
+
+1.0 Release Status:
+===================
+
+    Test         ( )
+    Alpha        ( )
+    Beta         ( )
+    Production   (x)
+
+
+2.0 New features supported in this release:
+============================================
+1. Added support for 11J
+2. Added support for 11W
+3. Added support for 11R
+4. Added support for loading user webpage in sapis
+5. WLAN 40MHz channel bandwidth is supported in 2.4GHz and 5GHz
+6. Added provision to send received data for http put data request
+7. BLE two peripherals support.
+8. BLE Power Optimizations.
+9. Low Power Mode support for the BLE.
+
+3.0 Changes/Issues fixed in this release:
+=============================================
+1. Bug fixes related to HTTPS
+2. Fixed issues in Coex mode (AP+BT+BLE) connectivity
+3. Fixed issue with MQTT over SSL after rejoin
+4. Fixed SNTP feature.
+5. Enhanced stability of the code for powersave mode 
+
+4.0 Known Issues:
+================
+- If station in concurrent mode perform scan, there is possibility for stations
+  connected to AP might disconnect
+- AP + BLE , WLAN + Bt Dual Mode are Supported in 256KB NWP Mode only.
+- 40MHz issue in PER mode
+- In WLAN + BT/BLE coex mode if high WiFi broadcast throughput might cause BT/BLE disconnections
+- In BLE mode, SMP connection in low power mode with powersave enabled is not supported
+
+
+5.0 Limitations/Features not supported:
+======================================
+- AMSDU TX is not supported
+- Fragmentation is not supported
+- AMSDU's within AMPDU is not supported
+- IPv6 is not supported in Concurrent mode
+- IPV6 is not supported is not present in SAPI
+- Currently module does not support Radio Measurement Requests feature of CCX V2
+- 11k is  not supported
+- Thread is not supported
+- In BLE, if Advertising/Scanning are in progress, and the device moves to Slave/Master role,
+   Advertising/Scanning will be stopped. Provide respective commands to start Advertising/Scanning
+   while being in Slave/Master role.
+- In WLAN + BLE coex, if BLE Connection is established with small Connection Interval(< 15ms),
+    simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and create_connection command)
+   shall be less than the existing Connection Interval.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+   simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- BT Sniff mode does not work properly in Wifi+ BT Co-ex Mode.
+- Directed Advertising is present in the Standalone- BLE Mode.
+- BLE Power Save for the Longer Duration (more than 500msec) regression issues.
+- For WLAN PER mode, continuous wave (unmodulated) mode is not supported
+- For WLAN PER mode, continuous (modulated) mode the Transmit start and stop have to be given twice for the config changes to effect.
+
+========================================================================================
+ Release            : RS14100.SW.0.9.6.1_BETA
+ Software Component : WiSeMCU 
+ Date               : 19th July 2018             
+_______________________________________________________________
+ 	Copyright (C) Redpine Signals, Inc 2018
+_______________________________________________________________
+
+1.0 Release Status:
+===================
+
+    Test         ( )
+    Alpha        ( )
+    Beta         (x)
+    Production   ( )
+
+
+2.0 New features supported in this release:
+============================================
+1. Added examples for BLE Whitelist, LE ping timeout, STA+BT Dual mode+BLE Dual role
+2. Added Support for BT/BLE Dual Mode Power Save
+3. Enhancements for start encryption in LE secure application
+
+3.0 Changes/Issues fixed in this release:
+=============================================
+1. Added fix for RAM retention issue in powersave
+
+
+5.0 Known Issues:
+================
+- Power save is not supported in BT dual mode
+- If station in concurrent mode perform scan, there is possibility for stations
+  connected to AP might disconnect
+- AP + BLE , WLAN + Bt Dual Mode are Supported in 256KB TA Mode only.
+- 40MHz issue in PER mode
+- In WLAN + BT/BLE coex mode if high WiFi broadcast throughput might cause BT/BLE disconnections
+
+
+6.0 Limitations/Features not supported:
+======================================
+- AMSDU TX is not supported
+- Fragmentation is not supported
+- AMSDU's within AMPDU is not supported
+- IPv6 is not supported in Concurrent mode
+- IPV6 is not supported is not present in SAPI
+- Currently module does not support Radio Measurement Requests feature of CCX V2
+- 11J, 11k is  not supported
+- ZigBee & Thread is not supported
+- In BLE, if Advertising/Scanning are in progress, and the device moves to Slave/Master role,
+   Advertising/Scanning will be stopped. Provide respective commands to start Advertising/Scanning
+   while being in Slave/Master role.
+- In WLAN + BLE coex, if BLE Connection is established with small Connection Interval(< 15ms),
+    simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and create_connection command)
+   shall be less than the existing Connection Interval.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+   simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- BT Sniff mode does not work properly in Wifi+ BT Co-ex Mode.
+- Directed Advertising is present in the Standalone- BLE Mode.
+- BLE Power Save for the Longer Duration (more than 500msec) regression
+  issues.
+
+========================================================================================
+ Release            : RS14100.SW.0.9.5b4_BETA
+ Software Component : WiSeMCU 
+ Date               : 10th July 2018             
+_______________________________________________________________
+ 	Copyright (C) Redpine Signals, Inc 2018
+_______________________________________________________________
+
+1.0 Release Status:
+===================
+
+    Test         ( )
+    Alpha        ( )
+    Beta         (x)
+    Production   ( )
+
+
+2.0 New features supported in this release:
+============================================
+1. Added support for A2DP profile 
+
+3.0 Changes/Issues fixed in this release:
+=============================================
+1. Added fix for RAM retention issue in powersave
+
+
+5.0 Known Issues:
+================
+- Power save is not supported in BT dual mode
+- If station in concurrent mode perform scan, there is possibility for stations
+  connected to AP might disconnect
+- AP + BLE , WLAN + Bt Dual Mode are Supported in 256KB TA Mode only.
+- 40MHz issue in PER mode
+- In WLAN + BT/BLE coex mode if high WiFi broadcast throughput might cause BT/BLE disconnections
+
+
+6.0 Limitations/Features not supported:
+======================================
+- AMSDU TX is not supported
+- Fragmentation is not supported
+- AMSDU's within AMPDU is not supported
+- IPv6 is not supported in Concurrent mode
+- IPV6 is not supported is not present in SAPI
+- Currently module does not support Radio Measurement Requests feature of CCX V2
+- 11J, 11k is  not supported
+- ZigBee & Thread is not supported
+- In BLE, if Advertising/Scanning are in progress, and the device moves to Slave/Master role,
+   Advertising/Scanning will be stopped. Provide respective commands to start Advertising/Scanning
+   while being in Slave/Master role.
+- In WLAN + BLE coex, if BLE Connection is established with small Connection Interval(< 15ms),
+    simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and create_connection command)
+   shall be less than the existing Connection Interval.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+   simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- BT Sniff mode does not work properly in Wifi+ BT Co-ex Mode.
+- Directed Advertising is present in the Standalone- BLE Mode.
+- BLE Power Save for the Longer Duration (more than 500msec) regression
+  issues.
+
+========================================================================================
+ Release            : RS14100.SW.0.9.5b3_BETA
+ Software Component : WiSeMCU 
+ Date               : 27th June 2018             
+_______________________________________________________________
+ 	Copyright (C) Redpine Signals, Inc 2018
+_______________________________________________________________
+
+1.0 Release Status:
+===================
+
+    Test         ( )
+    Alpha        ( )
+    Beta         (x)
+    Production   ( )
+
+
+2.0 New features supported in this release:
+============================================
+
+3.0 Changes/Issues fixed in this release:
+=============================================
+1. Changes to enhance WLAN+BT Coex Throughput
+2. Added fix for power save in BT classic
+3. Changes to enhance power numbers in Coex mode
+4. Added fix for the issue observed when made multiple connect attempts
+5. Added fix for Role change issue observed after multiple times
+6. BT classic Master Rx throughput issue when enable role switch
+   unsupported channel
+7. Added support for user configuration of TCP RX window size.
+8. Adaptive algorithm is added in WLAN for improving performance in dense environment
+9. Added support to ignore broadcast or multicast packets
+
+
+
+5.0 Known Issues:
+================
+- Power save is not supported in BT dual mode
+- If station in concurrent mode perform scan, there is possibility for stations
+  connected to AP might disconnect
+- AP + BLE , WLAN + Bt Dual Mode are Supported in 256KB TA Mode only.
+- 40MHz issue in PER mode
+- In WLAN + BT/BLE coex mode if high WiFi broadcast throughput might cause BT/BLE disconnections
+
+
+6.0 Limitations/Features not supported:
+======================================
+- AMSDU TX is not supported
+- Fragmentation is not supported
+- AMSDU's within AMPDU is not supported
+- IPv6 is not supported in Concurrent mode
+- IPV6 is not supported is not present in SAPI
+- Currently module does not support Radio Measurement Requests feature of CCX V2
+- 11J, 11k is  not supported
+- ZigBee & Thread is not supported
+- In BLE, if Advertising/Scanning are in progress, and the device moves to Slave/Master role,
+   Advertising/Scanning will be stopped. Provide respective commands to start Advertising/Scanning
+   while being in Slave/Master role.
+- In WLAN + BLE coex, if BLE Connection is established with small Connection Interval(< 15ms),
+    simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and create_connection command)
+   shall be less than the existing Connection Interval.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+   simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- BT Sniff mode does not work properly in Wifi+ BT Co-ex Mode.
+- Directed Advertising is present in the Standalone- BLE Mode.
+- BLE Power Save for the Longer Duration (more than 500msec) regression
+  issues.
+
+========================================================================================
+  Release            : RS14100.SW.0.9.5a1_BETA
+  Software Component : WiSeMCU 
+  Date               : 21st June 2018             
+_______________________________________________________________
+ 	Copyright (C) Redpine Signals, Inc 2018
+_______________________________________________________________
+
+1.0 Release Status:
+===================
+
+    Test         ( )
+    Alpha        ( )
+    Beta         (x)
+    Production   ( )
+
+
+2.0 New features supported in this release:
+============================================
+1) Added Role switch feature in BT classic stack.
+2) Added the following features in the BT/BLE Controller        
+    LE Ping
+    LE Channel Selection Algo-2
+    Role Switch
+    LR Duty Cycling.
+    LE Power Control support.
+
+3.0 Changes/Issues fixed in this release:
+=============================================
+1) Radio sharing improvements in Coex mode.
+
+
+5.0 Known Issues:
+================
+- Power save is not supported in BT dual mode
+- If station in concurrent mode perform scan, there is possibility for stations
+  connected to AP might disconnect
+- AP + BLE , WLAN + Bt Dual Mode are Supported in 256KB TA Mode only.
+- 40MHz issue in PER mode
+- In WLAN + BT/BLE coex mode if high WiFi broadcast throughput might cause BT/BLE disconnections
+
+
+6.0 Limitations/Features not supported:
+======================================
+- AMSDU TX is not supported
+- Fragmentation is not supported
+- AMSDU's within AMPDU is not supported
+- IPv6 is not supported in Concurrent mode
+- IPV6 is not supported is not present in SAPI
+- Currently module does not support Radio Measurement Requests feature of CCX V2
+- 11J, 11k is  not supported
+- ZigBee & Thread is not supported
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and
+  create_connection command) shall be less than the existing Connection Interval.
+- In BLE, if Advertising/Scanning are in progress, and the device moves to Slave/Master role,
+  Advertising/Scanning will be stopped. Provide respective commands to start
+  Advertising/Scanning while being in Slave/Master role.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+  simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In WLAN + BLE coex, if BLE Connection is established with small Connection Interval(< 15ms),
+    simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- In BLE, if device is acting as Master/Slave, Scan Window (in set_scan_params and create_connection command)
+   shall be less than the existing Connection Interval.
+- In BLE , if BLE Connection is established with small Connection Interval(< 15ms),
+   simultaneous roles (i.e. Master/Slave + Advertising/Scanning) are not supported.
+- BT Sniff mode does not work in Wifi+ BT Co-ex Mode.
+- Directed Advertising is present in the Standalone- BLE Mode.
+- Role Switch 100 Percent Success ratio is not present.
+- BLE Power Save for the Longer Duration (more than 500msec) not working.
+- BT EDR Tx 3MBPS issue.
+
+
+==============================================================
+Release 0.9.5a1_BETA (WiFi,BT,BLE & WiSeMCU images)
+==============================================================
+
+Bootloader Version: v1.0
+
+New Features/ Bug Fixes:
+=======================
+Command Modes:
+-------------
+Binary Mode 
+
+Wlan Station Mode Features :
+--------------------------
+Open Mode
+Security
+  WEP-64/WEP-128/WPA/WPA2
+  Mixed mode
+  Enterprise security
+    TLS/TTLS/PEAP/FAST/LEAP
+    PUF  
+WPS 1.0/2.0
+  Push Button Method/Pin Method
+Power Save profiles
+  Deepsleep/Max PSP/Fast PSP/WMM-PS
+Power Modes
+  (LP)/(ULP)
+Roaming & Rejoin
+  OKC/PMK caching/Pre-authentication
+  Dual band Roaming
+CCX V1/V2
+Security Accelators
+  AES 128/AES 192/AES 256
+  SHA 160/SHA 256/SHA 384/SHA 512
+  DH 2048/DH 4096
+  ECC
+  HRNG
+WiFi Direct
+  Client/GO/Autonomous
+AMPDU Aggregation/AMPDU De-Aggregation
+Fragmentation/De-Fragmentation
+Auto Rate
+Keep Alive Functionality
+Green Field
+Short GI
+Dual Band Support
+WMM
+BackGround Scan
+Scan in AP mode
+40Mhz Support
+802.11h
+802.11d
+802.11j
+Selective Scan
+Antenna Static Selection
+RSSI Support
+Auto Channel Selection
+802.11r-Over the Air
+
+Wlan Access Point Mode features: 
+-------------------------------
+8 clients support
+40MHz Support
+Security modes
+  WPA/WPA2
+WPS 2.0
+Per Station Auto Rate
+Keep Alive Functionality
+Hidden SSID mode
+STBC
+
+Concurrent mode Support :
+------------------------
+1 station & 1 AP support
+
+Other wlan Features :
+--------------
+Firmware Upgrade (ISP)
+Soft Reset
+Stored Configuration
+Profile based Stored Configuration
+PER Mode Support
+Wireless Configuration
+Wireless Firmware Upgrade (Pull & Push methods)
+
+
+Network Stack :
+---------------
+IPv4 
+IPv6
+ICMP
+ICMPv6
+ARP
+UDP
+TCP
+IGMP
+DHCP Client
+DHCPv6 Client
+DHCP Server
+DHCPv6 Server
+HTTP Client
+HTTPs Client
+HTTP Server
+HTTP POST
+Ping from host
+Support for customer webpages(using JSON objects)
+WEB Page Bypass
+DNS Client
+Web Sockets Client(normal, over SSL)
+FTP Client
+UI Based Feature Enable/Disable
+Dynamic Feature Enable/Disable
+M-DNS
+DNS-SD
+SSL 3.0/TLS 1.2 (Client and Server)
+SNTP
+SNMP
+SMTP client
+POP3
+MQTT client
+
+BT Features :
+-----------
+ACL Data
+Encryption
+Slot offset
+Timing accuracy
+Sniff mode
+Power Control
+RSSI
+Adaptive frequency hopping
+Enhanced Data Rate ACL
+Simple Pairing
+Enhanced Power Control
+Host Controller Interface
+Powersave
+SSP Support
+BT Dual Mode
+BT-Classic PER Support
+
+BLE Features :
+------------
+Advertising
+Connection Interval
+Security
+BT Smart (Peripheral)
+BT Smart ready (Master)
+Multiple slave support
+Advertising after connection
+Power save
+Channel Map update
+White list commands
+Disconnect handlers
+MIC failure handlers
+Dual Role Support
+LE Duty Cycling
+LE Secure Connections
+LE ping
+LL Privacy
+Data Length Extensions
+L2CAP connection oriented channel support
+LE Extended Scanner Filter Policies
+LE 2Mbps
+LE Long Range
+LE Channel selection
+SMP Protocol
+BLE PER Support
+High Duty cycling Non connectable
+
+
+BT Profiles :
+-----------
+GAP
+SDP
+L2CAP
+RFCOMM
+SPP
+
+
+BLE Profiles :
+------------
+GATT
+PXP (Proximity)
+GLP & GLS Glucose Profile & Service
+HRP / HRS Heart Rate Profile & Service
+Health Thermometer
+
+Coex Features :
+-------------
+WLAN Station + BT
+WLAN Station + BLE
+WLAN AP + BT
+WLAN AP + BLE
+WLAN AP + BT Dual Mode
+WLAN STA + BT Dual Mode
+WLAN STA + BT Dual Mode + BLE Dual Role
+
+
+Notes to be Followed:
+========================
+1.To enable 256k mode --Enable BIT(21) in extended custom feature bit map.
+2.Enable 256k for Coex-modes.
+3.Enable BIT(19) in  extended custom feature bit map for low power mode
+To enable the above Extended custom feature bits ,enable BIT(31) in custom feature bit map. 
+
+MCU Peripheral SAPI's :
+---------------------
+
+1. Added APIs and example support for following peripherals
+  - CAN
+  - CCI
+  - CRC
+  - CT
+  - EFUSE
+  - EGPIO
+  - ETHERNET
+  - FIM
+  - GSPI
+  - I2C
+  - I2S
+  - PWM
+  - QEI
+  - QSPI
+  - RNG
+  - RPDMA
+  - SDIO
+  - SIO
+  - SSI MASTER
+  - SSI SLAVE
+  - SSPI
+  - TIMERS
+  - uDMA
+  - USART/UART
+  - RTC/CALENDER
+  - M4SS CLOCKS
+  - M4 POWER SAVE
+  - ULPSS CLOCKS
+  - WDT 
+  - Aux DAC
+  - Aux ADC
+  - Opamp
+  - Comparator
+
+
+

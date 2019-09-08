@@ -1,0 +1,27 @@
+===============================================================================================
+                               MCU Deep Sleep Example Program
+===============================================================================================
+Copyright(C) Redpine Signals 2017
+All rights reserved by Redpine Signals.
+
+This program should be used on your own responsibility.
+Redpine Signals assumes no responsibility for any losses
+incurred by customers or third parties arising from the use of this file. 
+
+===============================================================================================
+===============================================================================================                                                       
+Functional description:
+===============================================================================================
+This program goes to un-conditional sleep withput retention sleep and shows the 500nA current
+===============================================================================================
+ 
+Assistance software:
+---------------------
+None
+
+===============================================================================================
+Usage Procedure:
+===============================================================================================
+1.Build and run the program 
+2.Connect the power meter at J19 in smart EVK to see the sleep current. 
+===============================================================================================

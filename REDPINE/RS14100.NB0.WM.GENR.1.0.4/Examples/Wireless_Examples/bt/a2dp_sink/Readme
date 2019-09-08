@@ -1,0 +1,11 @@
+A2DP sink application is running on WiSeConnect mode.
+SBC packet received from TA and decode the SBC packet.
+Decoded SBC packets are added to Queue and If i2s is idle send/configure the I2S
+I2S transfer was done reconfigure the I2S in interrupt contest 
+
+I2S pins configurations: (RTC_Device.h)
+SCLK:   - GPIO-7
+LRCLK: - GPIO-11
+DIN:      - GPIO-10
+DOUT:  - GPIO-6
+DMA descriptor length 256 bytes.

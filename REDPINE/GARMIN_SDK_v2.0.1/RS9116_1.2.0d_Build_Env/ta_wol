@@ -1,0 +1,4 @@
+tar pport /
+set history filename /work/.gdb_history
+set history save on
+c

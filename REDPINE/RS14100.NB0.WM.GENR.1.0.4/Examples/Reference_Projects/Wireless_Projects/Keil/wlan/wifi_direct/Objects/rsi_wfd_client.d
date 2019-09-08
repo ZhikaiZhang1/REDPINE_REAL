@@ -1,0 +1,9 @@
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\Wireless_Examples\wlan\wifi_direct\rsi_wfd_client.c
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_data_types.h
+.\objects\rsi_wfd_client.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_common_apis.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_wlan_apis.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_socket.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_bootup_config.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_error.h
+.\objects\rsi_wfd_client.o: ..\..\..\..\..\..\Wireless_Library\include\rsi_os.h
