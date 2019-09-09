@@ -1,3 +1,6 @@
+modules/
+Objects/
+*.d
 *.o
 *.map
 *.hex
