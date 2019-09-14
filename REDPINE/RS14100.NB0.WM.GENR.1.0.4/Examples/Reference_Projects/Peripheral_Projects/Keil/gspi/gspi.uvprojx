@@ -14,16 +14,16 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>RS14100_1MB</Device>
+          <Device>RS14100_4MB</Device>
           <Vendor>Redpine Signals</Vendor>
           <PackID>Redpine.RS14100_DFP.1.0.5</PackID>
           <PackURL>http://www.redpinesignals.com/downloads/keil_packs/RS14100_DFP/</PackURL>
-          <Cpu>IRAM(0x000000C,0x2FFF4) IROM(0x08012000,0xEE000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IRAM(0x000000C,0x2F800) IROM(0x08012000,0x3EE000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD00000000 -FC4000 -FN1 -FF0RS14100_SF_1MB -FS08012000 -FL0EE000 -FP0($$Device:RS14100_1MB$Flash\RS14100_SF_1MB.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD00000000 -FC4000 -FN1 -FF0RS14100_SF_4MB -FS08012000 -FL03EE000 -FP0($$Device:RS14100_4MB$Flash\RS14100_SF_4MB.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:RS14100_1MB$Driver\common\chip\inc\RS1xxxx.h</RegisterFile>
+          <RegisterFile>$$Device:RS14100_4MB$Driver\Common\chip\inc\RS1xxxx.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:RS14100_1MB$SVD\RS1xxxx.svd</SFDFile>
+          <SFDFile>$$Device:RS14100_4MB$SVD\RS1xxxx.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -245,12 +245,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0xc</StartAddress>
-                <Size>0x2fff4</Size>
+                <Size>0x2f800</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x8012000</StartAddress>
-                <Size>0xee000</Size>
+                <Size>0x3ee000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -275,7 +275,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8012000</StartAddress>
-                <Size>0xee000</Size>
+                <Size>0x3ee000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -300,7 +300,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0xc</StartAddress>
-                <Size>0x2fff4</Size>
+                <Size>0x2f800</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>

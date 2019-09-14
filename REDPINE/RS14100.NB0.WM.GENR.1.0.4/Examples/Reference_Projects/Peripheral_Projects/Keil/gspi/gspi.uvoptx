@@ -28,7 +28,7 @@
     <TargetOption>
       <CLKADS>12000000</CLKADS>
       <OPTTT>
-        <gFlags>0</gFlags>
+        <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>0</RunSim>
         <RunTarget>1</RunTarget>
@@ -73,7 +73,7 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>0</tvExp>
+        <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD00000000 -FC4000 -FN1 -FF0RS14100_SF_1MB -FS08012000 -FL0EE000 -FP0($$Device:RS14100_1MB$Flash\RS14100_SF_1MB.FLM))</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC4000 -FD00000000 -FF0RS14100_SF_4MB -FL03EE000 -FS08012000 -FP0($$Device:RS14100_4MB$Flash\RS14100_SF_4MB.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -222,7 +222,7 @@
 
   <Group>
     <GroupName>example</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

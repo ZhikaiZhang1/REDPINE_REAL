@@ -942,7 +942,7 @@
 //     <o3> Channel <28=>28
 //     <i>  Selects DMA Channel (only Channel 28 can be used)
 //   </e>
-#define RTE_SSI_MASTER_RX_DMA                0
+#define RTE_SSI_MASTER_RX_DMA                1
 #define RTE_SSI_MASTER_UDMA_RX_CH	         28
 #define RTE_SSI_MASTER_DMA_RX_LEN_PER_DES	 192
 
@@ -950,7 +950,7 @@
 //     <o3> Channel <29=>29
 //     <i>  Selects DMA Channel (only Channel 29 can be used)
 //   </e>
-#define RTE_SSI_MASTER_TX_DMA                0
+#define RTE_SSI_MASTER_TX_DMA                1
 #define RTE_SSI_MASTER_UDMA_TX_CH      		 29
 #define RTE_SSI_MASTER_DMA_TX_LEN_PER_DES	 192
 // </e>

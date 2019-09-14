@@ -69,29 +69,35 @@ int main(void)
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
 	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
   
-  /* SS line = ACTIVE = LOW */
-  SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
-  
-	SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
-	
-  /* Waits until spi_done=0 */
-	while (!spi_done);	
-  spi_done = 0;
-  
-  /* SS line = ACTIVE = LOW */
-  SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-  
-  for(i=0;i<BUFFER_SIZE;i++)
-  {
-    if(testdata_out[i]==testdata_in[i])
-    {
-      continue; 
-    }
-    else
-    {
-       break; 
-    }
-  }
+	while (1){
+		/* SS line = ACTIVE = LOW */
+		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
+		
+		SPIdrv->Send(testdata_out, BUFFER_SIZE);
+		
+		/* Waits until spi_done=0 */
+		while (!spi_done);	
+		spi_done = 0;
+		SPIdrv->Receive(testdata_in, BUFFER_SIZE);
+		while (!spi_done);	
+		spi_done = 0;
+		
+		/* SS line = ACTIVE = LOW */
+		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+		
+		for(i=0;i<BUFFER_SIZE;i++)
+		{
+			if(testdata_out[i]==testdata_in[i])
+			{
+				continue; 
+			}
+			else
+			{
+				 break; 
+			}
+			
+		}
+	}
 while(1);
 	
 }
