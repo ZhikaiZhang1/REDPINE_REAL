@@ -1,15 +1,72 @@
 #include "SPI.h"
 #include "RTE_Device.h" 
 #include "rsi_board.h"
+#include "rsi_chip.h"
 
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
 #define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
+#define PININT_IRQ_HANDLER         IRQ059_Handler                   /* GPIO interrupt IRQ function name            */
+#define PININT_NVIC_NAME           EGPIO_PIN_7_IRQn                 /* GPIO interrupt NVIC interrupt name          */
+#define M4_GPIO_PORT               0                                /* GPIO port number                            */
+#define M4_GPIO_PIN                6                                /* GPIO pin number                             */
+#define PIN_INT                    7  
+
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
+volatile bool spi_receive_event = false;
 uint8_t spi_done = 0;
 
+//interrupt handler
+void PININT_IRQ_HANDLER(void)
+{
+	uint32_t gintStatus;
+
+	/*get interrupt status*/
+	gintStatus=RSI_EGPIO_GetIntStat(EGPIO,PIN_INT);
+
+	if((gintStatus &EGPIO_PIN_INT_CLR_RISING ))// || (gintStatus &EGPIO_PIN_INT_CLR_FALLING ))
+	{
+		/*clear interrupt*/
+		RSI_EGPIO_IntClr(EGPIO, PIN_INT ,INTERRUPT_STATUS_CLR);
+		spi_receive_event = true;
+	}
+	else
+	{
+		RSI_EGPIO_IntMask(EGPIO , PIN_INT);
+	}
+	return ;
+}
+
+static void Set_Up_INT(void){
+	/*Configures the system default clock and power configurations*/
+ 	SystemCoreClockUpdate();
+	
+	/*Enable clock for EGPIO module*/
+	RSI_CLK_PeripheralClkEnable(M4CLK,EGPIO_CLK,ENABLE_STATIC_CLK);
+
+	/*PAD selection*/
+	RSI_EGPIO_PadSelectionEnable(1);
+
+	/*REN enable */
+	RSI_EGPIO_PadReceiverEnable(M4_GPIO_PIN);
+
+	/*Configure default GPIO mode(0) */
+	RSI_EGPIO_SetPinMux(EGPIO,M4_GPIO_PORT ,M4_GPIO_PIN,EGPIO_PIN_MUX_MODE0);
+
+	/*Selects the pin interrupt for the GPIO*/
+	RSI_EGPIO_PinIntSel(EGPIO, PIN_INT , M4_GPIO_PORT, M4_GPIO_PIN);
+
+	/*Configures the edge /level interrupt*/
+	RSI_EGPIO_SetIntLowLevelEnable(EGPIO,PIN_INT);
+
+	/*Unmask the  interrupt*/
+	RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
+
+	/*NVIC enable */
+	NVIC_EnableIRQ(PININT_NVIC_NAME);
+}
 void mySPI_callback(uint32_t event)
 {
 	switch (event)
@@ -68,17 +125,21 @@ int main(void)
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
 	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
-  
+  Set_Up_INT();
 	while (1){
+		if (spi_receive_event){
+		while (!spi_done);	
+		  spi_done = 0;
+		  SPIdrv->Receive(testdata_in, BUFFER_SIZE);
+			spi_receive_event = false;
+		}
+		
 		/* SS line = ACTIVE = LOW */
 		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
 		
 		SPIdrv->Send(testdata_out, BUFFER_SIZE);
 		
 		/* Waits until spi_done=0 */
-		while (!spi_done);	
-		spi_done = 0;
-		SPIdrv->Receive(testdata_in, BUFFER_SIZE);
 		while (!spi_done);	
 		spi_done = 0;
 		
@@ -97,6 +158,7 @@ int main(void)
 			}
 			
 		}
+		RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
 	}
 while(1);
 	
