@@ -763,7 +763,7 @@
 
 // <e> SSI_MASTER (Serial Peripheral Interface 1) [Driver_SSI_MASTER]
 // <i> Configuration settings for Driver_SSI_MASTER in component ::CMSIS Driver:SPI
-#define RTE_SSI_MASTER                  1
+#define RTE_SSI_MASTER                  0
 
 
 #define RTE_SSI_MASTER_INPUT_CLOCK      SSI_SOCPLLCLK
@@ -957,7 +957,7 @@
 
 // <e> SSI_SLAVE (Serial Peripheral Interface 2) [Driver_SSI_SLAVE]
 // <i> Configuration settings for Driver_SSI_SLAVE in component ::CMSIS Driver:SPI
-#define RTE_SSI_SLAVE                  0
+#define RTE_SSI_SLAVE                  1
 
 
 #define RTE_SSI_SLAVE_INPUT_CLOCK                  SSISLAVE_CLK
@@ -1094,7 +1094,7 @@
 //     <o3> Channel <22=>22
 //     <i>  Selects DMA Channel (only Channel 22 can be used)
 //   </e>
-#define RTE_SSI_SLAVE_RX_DMA                0
+#define RTE_SSI_SLAVE_RX_DMA                1
 #define RTE_SSI_SLAVE_UDMA_RX_CH	         22
 #define RTE_SSI_SLAVE_DMA_RX_LEN_PER_DES	 1024
 
@@ -1102,7 +1102,7 @@
 //     <o3> Channel <23=>23
 //     <i>  Selects DMA Channel (only Channel 23 can be used)
 //   </e>
-#define RTE_SSI_SLAVE_TX_DMA                0
+#define RTE_SSI_SLAVE_TX_DMA                1
 #define RTE_SSI_SLAVE_UDMA_TX_CH      		 23
 #define RTE_SSI_SLAVE_DMA_TX_LEN_PER_DES	 1024
 

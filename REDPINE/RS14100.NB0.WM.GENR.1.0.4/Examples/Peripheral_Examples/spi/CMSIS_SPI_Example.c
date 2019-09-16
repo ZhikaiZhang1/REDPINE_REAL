@@ -7,7 +7,7 @@
 #define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 /* SPI Driver */
-extern ARM_DRIVER_SPI Driver_SSI_MASTER;
+extern ARM_DRIVER_SPI Driver_SSI_SLAVE;
 uint8_t spi_done = 0;
 
 void mySPI_callback(uint32_t event)
@@ -40,7 +40,7 @@ int main(void)
 {
     
   uint16_t  i = 0;
-	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_MASTER;
+	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_SLAVE;
  
  	SystemCoreClockUpdate();
   
@@ -67,10 +67,9 @@ int main(void)
 	SPIdrv->PowerControl(ARM_POWER_FULL);
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
-	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	SPIdrv->Control(ARM_SPI_MODE_SLAVE | ARM_SPI_CPOL1_CPHA1  | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
   
-  /* SS line = ACTIVE = LOW */
-  SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
+  /* SS line = ACTIVE = LOW Used to be here for master, but now slave*/
   
 	SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
 	
