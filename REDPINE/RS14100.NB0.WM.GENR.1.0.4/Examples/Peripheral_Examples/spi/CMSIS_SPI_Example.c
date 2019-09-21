@@ -11,7 +11,7 @@
 #define PININT_NVIC_NAME           EGPIO_PIN_7_IRQn                 /* GPIO interrupt NVIC interrupt name          */
 #define M4_GPIO_PORT               0                                /* GPIO port number                            */
 #define M4_GPIO_PIN                6                                /* GPIO pin number                             */
-#define PIN_INT                    7  
+#define PIN_INT                    7 
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
@@ -131,7 +131,7 @@ int main(void)
 		while (!spi_done);	
 		  spi_done = 0;
 		  SPIdrv->Receive(testdata_in, BUFFER_SIZE);
-			spi_receive_event = false;
+			//spi_receive_event = false;
 		}
 		
 		/* SS line = ACTIVE = LOW */
@@ -145,21 +145,24 @@ int main(void)
 		
 		/* SS line = ACTIVE = LOW */
 		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-		
-		for(i=0;i<BUFFER_SIZE;i++)
-		{
-			if(testdata_out[i]==testdata_in[i])
+		if(spi_receive_event){
+			spi_receive_event = false;
+			for(i=0;i<BUFFER_SIZE;i++)
 			{
-				continue; 
+				
+				if(testdata_out[i]==testdata_in[i])
+				{
+					continue; 
+				}
+				else
+				{
+					 break; 
+				}
+				
 			}
-			else
-			{
-				 break; 
-			}
-			
-		}
 		RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
 	}
-while(1);
+}
+//while(1);
 	
 }
