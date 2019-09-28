@@ -8,10 +8,10 @@
 #define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 #define PININT_IRQ_HANDLER         IRQ059_Handler                   /* GPIO interrupt IRQ function name            */
-#define PININT_NVIC_NAME           EGPIO_PIN_7_IRQn                 /* GPIO interrupt NVIC interrupt name          */
+#define PININT_NVIC_NAME           EGPIO_PIN_6_IRQn                 /* GPIO interrupt NVIC interrupt name          */
 #define M4_GPIO_PORT               0                                /* GPIO port number                            */
 #define M4_GPIO_PIN                6                                /* GPIO pin number                             */
-#define PIN_INT                    7 
+#define PIN_INT                    6
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
@@ -66,6 +66,7 @@ static void Set_Up_INT(void){
 
 	/*NVIC enable */
 	NVIC_EnableIRQ(PININT_NVIC_NAME);
+	return;
 }
 void mySPI_callback(uint32_t event)
 {
@@ -125,7 +126,7 @@ int main(void)
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
 	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
-  Set_Up_INT();
+  //Set_Up_INT();
 	while (1){
 		if (spi_receive_event){
 		while (!spi_done);	
@@ -152,12 +153,13 @@ int main(void)
 				
 				if(testdata_out[i]==testdata_in[i])
 				{
-					continue; 
+					//continue; 
+					//do this later
 				}
-				else
+				/*else
 				{
 					 break; 
-				}
+				}*/
 				
 			}
 		RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
