@@ -24,6 +24,8 @@
  * Include files
  * */
 
+ #include "rsi_board.h"
+
 //! include file to refer data types
 #include "rsi_data_types.h"
 
@@ -44,18 +46,19 @@
 //! OS include file to refer OS specific functionality
 #include "rsi_os.h"
 
+#include "sys/socket.h"
 
 //! socket include file to firmware upgrade APIs
 #include "rsi_firmware_upgradation.h"
 
 //! Access point SSID to connect
-#define SSID              "REDPINE_AP"
+#define SSID              "Logan_conqueror"
 
 //! Security type
-#define SECURITY_TYPE     RSI_OPEN
+#define SECURITY_TYPE     RSI_WPA2
 
 //! Password
-#define PSK               ""
+#define PSK               "89706090"
 
 
 //! DHCP mode 1- Enable 0- Disable
@@ -78,15 +81,25 @@
 
 #endif
 
+#define HOSTNAME "Logan"
+//select defines
+#define FD_CLR(fd, set)   (((set)->fd_bits[(fd)/8]) &= ~(1 << ((fd) & 7)))
+#define FD_SET(fd, set)   (((set)->fd_bits[(fd)/8]) |= (1 << ((fd) & 7)))
+#define FD_ISSET(fd, set) (((set)->fd_bits[(fd)/8]) &  (1 << ((fd) & 7)))
+#define FD_ZERO(set)      memset(set, 0, sizeof(fd_set))
+
 //! Device port number
-#define DEVICE_PORT       5001
+#define DEVICE_PORT       3490
 
 //! Server port number
-#define SERVER_PORT       5001
+#define SERVER_PORT       3490
 
 //! Server IP address. Should be in reverse long format
 //! E.g: 0x640AA8C0 == 192.168.10.100
 #define SERVER_IP_ADDRESS 0x640AA8C0
+
+//! Number of packet to send or receive
+#define NUMBER_OF_PACKETS 1000
 
 //! Receive data length
 #define RECV_BUFFER_SIZE   1027
@@ -98,7 +111,7 @@
 #define RSI_WLAN_TASK_PRIORITY   1
 
 //! Wireless driver task priority
-#define RSI_DRIVER_TASK_PRIORITY   2
+#define RSI_DRIVER_TASK_PRIORITY   1
 
 //! Wlan task stack size
 #define RSI_WLAN_TASK_STACK_SIZE  500
@@ -106,6 +119,20 @@
 //! Wireless driver task stack size
 #define RSI_DRIVER_TASK_STACK_SIZE  500
 
+//! OTAF Server port number
+#define OTAF_SERVER_PORT                  3490
+
+//! OTAF TCP receive timeout
+#define OTAF_RX_TIMEOUT                   200
+
+//! OTAF TCP retry count
+#define OTAF_TCP_RETRY_COUNT              20
+
+//! OTA Firmware upgradation retry count
+#define OTAF_RETRY_COUNT                  10
+
+//! OTAF response handler
+void rsi_ota_fw_up_response_handler(uint16_t status, uint16_t chunk_number);
 
 //! Memory to initialize driver
 uint8_t global_buf[GLOBAL_BUFF_LEN];
@@ -114,6 +141,9 @@ int32_t rsi_firmware_upgradation_app()
 {
   int32_t     client_socket;
   struct      rsi_sockaddr_in server_addr, client_addr;
+	struct hostent * he;
+	static uint16_t    chunk_number = 1;
+	
   int32_t     status       = RSI_SUCCESS;
   int32_t     recv_size = 0;
 #if !(DHCP_MODE)
@@ -152,10 +182,14 @@ int32_t rsi_firmware_upgradation_app()
 #else
   status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_STATIC, (uint8_t *)&ip_addr, (uint8_t *)&network_mask, (uint8_t *)&gateway, NULL, 0, 0);
 #endif
-  if(status != RSI_SUCCESS)
-  {
-    return status;
-  }
+	
+
+// editing here
+	
+
+    //status = rsi_ota_firmware_upgradation(RSI_IP_VERSION_4, (uint8_t *) he->h_addr_list[0], OTAF_SERVER_PORT, chunk_number, OTAF_RX_TIMEOUT, OTAF_TCP_RETRY_COUNT, rsi_ota_fw_up_response_handler);
+
+	
 
   //! Create socket
   client_socket = rsi_socket(AF_INET, SOCK_STREAM, 0);
@@ -191,11 +225,17 @@ int32_t rsi_firmware_upgradation_app()
   //! Set server port number, using htons function to use proper byte order
   server_addr.sin_port = htons(SERVER_PORT);
 
+		 while ((he = gethostbyname ("Logan")) == NULL) {
+    	
+        //perror ("gethostbyname");
+        //exit (1);
+    }
+	server_addr.sin_addr = * ((struct in_addr *) he-> h_addr_list[0]);
   //! Set IP address to localhost
-  server_addr.sin_addr.s_addr = SERVER_IP_ADDRESS;
+  //server_addr.sin_addr.s_addr = SERVER_IP_ADDRESS;
 
   //! Connect to server socket
-  status = rsi_connect(client_socket, (struct rsi_sockaddr *) &server_addr, sizeof(server_addr));
+  status = RSI_bsd_connect(client_socket, (struct rsi_sockaddr *) &server_addr, sizeof(server_addr));	//add this
   if(status != RSI_SUCCESS)
   {
     status = rsi_wlan_get_status();

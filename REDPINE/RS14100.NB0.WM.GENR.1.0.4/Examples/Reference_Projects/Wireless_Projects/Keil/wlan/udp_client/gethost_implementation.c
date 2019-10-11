@@ -203,3 +203,28 @@ memcpy( out, in, sizeof( *out ) );
 /* Convert Port to LE */
 out->sin_port = UTL_swap_u16( in->sin_port );
 } /* change_sockaddr_endianness() */
+
+/*********************************************************************
+*
+*   PROCEDURE NAME:
+*       RSI_bsd_connect
+*
+*   DESCRIPTION:
+*       RSI implementation of connect
+*
+*********************************************************************/
+int RSI_bsd_connect
+    (
+    int                     sock,
+    const struct sockaddr * addr,
+    socklen_t               addrlen
+    )	//add this
+{
+struct sockaddr le_addr;
+int ret;
+
+CONVERT_BE_TO_LE_SOCKADDR( addr, &le_addr );
+ret = rsi_connect( sock, &le_addr, addrlen );
+
+return ret;
+} /* RSI_bsd_connect() */

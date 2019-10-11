@@ -47,14 +47,20 @@
 //! socket include file to firmware upgrade APIs
 #include "rsi_firmware_upgradation.h"
 
+#include "sys/socket.h"
+//#include "select.h"
+
 //! Access point SSID to connect
-#define SSID              "REDPINE_AP"
+#define SSID              "Logan_conqueror"
+
+//!Scan Channel number , 0 - to scan all channels
+#define CHANNEL_NO              0
 
 //! Security type
-#define SECURITY_TYPE     RSI_OPEN
+#define SECURITY_TYPE     RSI_WPA2
 
 //! Password
-#define PSK               ""
+#define PSK               "89706090"
 
 
 //! DHCP mode 1- Enable 0- Disable
@@ -77,18 +83,25 @@
 
 #endif
 
+#define HOSTNAME "Logan"
+//select defines
+#define FD_CLR(fd, set)   (((set)->fd_bits[(fd)/8]) &= ~(1 << ((fd) & 7)))
+#define FD_SET(fd, set)   (((set)->fd_bits[(fd)/8]) |= (1 << ((fd) & 7)))
+#define FD_ISSET(fd, set) (((set)->fd_bits[(fd)/8]) &  (1 << ((fd) & 7)))
+#define FD_ZERO(set)      memset(set, 0, sizeof(fd_set))
+
 //! Device port number
 #define DEVICE_PORT       5001
 
 //! Server port number
-#define SERVER_PORT       5001
+#define SERVER_PORT       3490
 
 //! Server IP address. Should be in reverse long format
-//! E.g: 0x640AA8C0 == 192.168.0.101
-#define SERVER_IP_ADDRESS 0x6500A8C0
+//! E.g: 0x640AA8C0 == 192.168.10.100
+#define SERVER_IP_ADDRESS 0x640AA8C0
 
-//! Receive data length
-#define RECV_BUFFER_SIZE   1027
+//! Number of packet to send or receive
+#define NUMBER_OF_PACKETS 1000
 
 //! Memory length for driver
 #define GLOBAL_BUFF_LEN   10000
@@ -97,7 +110,7 @@
 #define RSI_WLAN_TASK_PRIORITY   1
 
 //! Wireless driver task priority
-#define RSI_DRIVER_TASK_PRIORITY   2
+#define RSI_DRIVER_TASK_PRIORITY   1
 
 //! Wlan task stack size
 #define RSI_WLAN_TASK_STACK_SIZE  500
@@ -120,8 +133,24 @@
 //! OTAF response handler
 void rsi_ota_fw_up_response_handler(uint16_t status, uint16_t chunk_number);
 
+int32_t     client_socket;
+struct      rsi_sockaddr_in server_addr;
+
+#define SEND_LENGTH 48
+
 //! Memory to initialize driver
 uint8_t global_buf[GLOBAL_BUFF_LEN];
+typedef struct {
+	int bot_id;
+	uint8_t send_buffer[SEND_LENGTH];
+}array_sending;
+typedef struct{
+	int length;
+	uint8_t* recv_buffer;
+	
+}array_receiving;
+uint8_t global_buf[GLOBAL_BUFF_LEN];
+uint8_t recv_buffer[SEND_LENGTH];
 
 //! standard defines
 volatile uint8_t  rsp_received;
@@ -134,12 +163,16 @@ static uint16_t    chunk_number = 1;
 int32_t rsi_firmware_upgradation_app()
 {
   int32_t     status       = RSI_SUCCESS;
+	int32_t     packet_count = 0;
+	struct hostent * he;
+	char* hostname = HOSTNAME;
+	
 #if !(DHCP_MODE)
   uint32_t    ip_addr      = DEVICE_IP;
   uint32_t    network_mask = NETMASK;
   uint32_t    gateway      = GATEWAY;
 #endif
-  uint32_t    otaf_server_addr  = SERVER_IP_ADDRESS;
+  uint32_t    otaf_server_addr;//  = SERVER_IP_ADDRESS;
 
   //! Set OTAF retry count
   otaf_retry_cnt = OTAF_RETRY_COUNT;
@@ -175,12 +208,17 @@ int32_t rsi_firmware_upgradation_app()
   {
     return status;
   }
- 
-
+	
+ if ((he = gethostbyname ("Logan")) == NULL) {
+    	server_addr.sin_addr = * ((struct in_addr *) he-> h_addr_list[0]);
+        //perror ("gethostbyname");
+        //exit (1);
+    }
+// editing here
 
   do
   {
-    status = rsi_ota_firmware_upgradation(RSI_IP_VERSION_4, (uint8_t *)&otaf_server_addr, OTAF_SERVER_PORT, chunk_number, OTAF_RX_TIMEOUT, OTAF_TCP_RETRY_COUNT, rsi_ota_fw_up_response_handler);
+    status = rsi_ota_firmware_upgradation(RSI_IP_VERSION_4, (uint8_t *) he->h_addr_list[0], OTAF_SERVER_PORT, chunk_number, OTAF_RX_TIMEOUT, OTAF_TCP_RETRY_COUNT, rsi_ota_fw_up_response_handler);
 
     if(status != RSI_SUCCESS)
     {
