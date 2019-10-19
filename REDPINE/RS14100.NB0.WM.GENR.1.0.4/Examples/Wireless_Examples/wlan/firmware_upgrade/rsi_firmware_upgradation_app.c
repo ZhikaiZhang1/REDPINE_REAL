@@ -162,18 +162,19 @@ int32_t rsi_firmware_upgradation_app()
     return status;
   }
 
-  //! Scan for Access points
+  //! Scan for Access points.
   status = rsi_wlan_scan((int8_t *)SSID, 0, NULL, 0);
   if(status != RSI_SUCCESS)
   {
-    return status;
+		return status;
   }
 
-  //! Connect to an Access point
+  //! Connect to an Access point.
   status = rsi_wlan_connect((int8_t *)SSID, SECURITY_TYPE, PSK);
-  if(status != RSI_SUCCESS)
+  while (status != RSI_SUCCESS)
   {
-    return status;
+    status = rsi_wlan_connect((int8_t *)SSID, SECURITY_TYPE, PSK);	//Keep trying to connect until successful
+		//return status;
   }
 
   //! Configure IP 
@@ -193,10 +194,10 @@ int32_t rsi_firmware_upgradation_app()
 
   //! Create socket
   client_socket = rsi_socket(AF_INET, SOCK_STREAM, 0);
-  if(client_socket < 0)
+  while(client_socket < 0)
   {
     status = rsi_wlan_get_status();
-    return status;
+    //return status;
   }
 
   //! Memset client structrue
@@ -210,10 +211,11 @@ int32_t rsi_firmware_upgradation_app()
 
   //! Bind socket
   status = rsi_bind(client_socket, (struct rsi_sockaddr *) &client_addr, sizeof(client_addr));
-  if(status != RSI_SUCCESS)
+  while(status != RSI_SUCCESS)
   {
-    status = rsi_wlan_get_status();
-    return status;
+		status = rsi_bind(client_socket, (struct rsi_sockaddr *) &client_addr, sizeof(client_addr));
+    //status = rsi_wlan_get_status();
+    //return status;
   }
 
   //! Set server structure
@@ -236,10 +238,11 @@ int32_t rsi_firmware_upgradation_app()
 
   //! Connect to server socket
   status = RSI_bsd_connect(client_socket, (struct rsi_sockaddr *) &server_addr, sizeof(server_addr));	//add this
-  if(status != RSI_SUCCESS)
+  while(status != RSI_SUCCESS)
   {
-    status = rsi_wlan_get_status();
-    return status;
+		status = RSI_bsd_connect(client_socket, (struct rsi_sockaddr *) &server_addr, sizeof(server_addr));
+    //status = rsi_wlan_get_status();
+    //return status;
   }
 
   while(1)
@@ -259,10 +262,11 @@ int32_t rsi_firmware_upgradation_app()
 
     //! Send firmware upgrade request to remote peer
     status = rsi_send(client_socket,(int8_t *)send_buffer, 3, 0);
-    if(status < 0)
+    while(status < 0)
     {
-      status = rsi_wlan_get_status();
-      return status;
+			status = rsi_send(client_socket,(int8_t *)send_buffer, 3, 0);
+      //status = rsi_wlan_get_status();
+      //return status;
     }
 
     //! Get first 3 bytes from remote peer

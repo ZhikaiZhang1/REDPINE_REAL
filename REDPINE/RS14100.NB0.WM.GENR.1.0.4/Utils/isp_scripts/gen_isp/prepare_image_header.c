@@ -1,4 +1,6 @@
+#include "calc.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #define BIT(x)             (1 << x)
 
@@ -8,6 +10,8 @@
 #define ENCRYPTION          BIT(1)
 #define SIGNATURE            BIT(3)
 #endif
+
+//crc_t crc_calc(unsigned char *data_in, unsigned int num);
 
 typedef unsigned char       uint8;
 //! char is mapped to int8
@@ -126,3 +130,33 @@ void main(int argc, char *argv[])
 #endif  
 #endif
 }
+/*
+//added this def.
+crc_t crc_calc(unsigned char *data_in, unsigned int num)
+{
+    crc_cfg_t cfg ;
+    crc_t crc;
+    int i;
+    
+    cfg.width = 32;
+    cfg.poly = 0xd95eaae5;
+    //cfg.poly = 0xd83e2927;
+    cfg.reflect_in = 1;
+    cfg.xor_in = 0;
+    cfg.reflect_out = 1;
+    cfg.xor_out = 0 ;
+
+    cfg.msb_mask = 1UL << (cfg.width - 1);
+    cfg.crc_mask = (cfg.msb_mask - 1) | cfg.msb_mask;
+    cfg.crc_shift = cfg.width < 8 ? 8 - cfg.width : 0;
+
+    cfg.poly &= cfg.crc_mask;
+    cfg.xor_in &= cfg.crc_mask;
+    cfg.xor_out &= cfg.crc_mask;
+
+    crc = crc_init(&cfg);
+    crc = crc_update(&cfg, crc, (unsigned char *)data_in, num);
+    crc = crc_finalize(&cfg, crc);
+
+    return crc;
+}*/

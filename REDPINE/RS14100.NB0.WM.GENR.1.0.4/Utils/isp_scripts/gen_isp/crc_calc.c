@@ -1,7 +1,7 @@
+#include "calc.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
 #define CRC_ALGO_BIT_BY_BIT 1
 
 typedef unsigned int crc_t;
