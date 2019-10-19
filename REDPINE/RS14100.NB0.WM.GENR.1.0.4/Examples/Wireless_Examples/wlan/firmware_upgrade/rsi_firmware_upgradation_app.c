@@ -196,7 +196,8 @@ int32_t rsi_firmware_upgradation_app()
   client_socket = rsi_socket(AF_INET, SOCK_STREAM, 0);
   while(client_socket < 0)
   {
-    status = rsi_wlan_get_status();
+    client_socket = rsi_socket(AF_INET, SOCK_STREAM, 0);
+		//status = rsi_wlan_get_status();
     //return status;
   }
 
@@ -262,11 +263,10 @@ int32_t rsi_firmware_upgradation_app()
 
     //! Send firmware upgrade request to remote peer
     status = rsi_send(client_socket,(int8_t *)send_buffer, 3, 0);
-    while(status < 0)
+    if(status < 0)
     {
-			status = rsi_send(client_socket,(int8_t *)send_buffer, 3, 0);
-      //status = rsi_wlan_get_status();
-      //return status;
+      status = rsi_wlan_get_status();
+      return status;
     }
 
     //! Get first 3 bytes from remote peer
