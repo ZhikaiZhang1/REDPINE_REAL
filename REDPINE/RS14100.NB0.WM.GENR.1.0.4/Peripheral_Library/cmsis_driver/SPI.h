@@ -31,6 +31,9 @@
 #include "UDMA.h"     
 #include "clock_update.h"
 
+void set_spi (int set);
+
+
 #define  SSI_DISABLE           			   				0x00 /*!< Disable the SSI Operation*/
 #define  SSI_ENABLE           			   				0x01 /*!< Enable the SSI Operation*/
 #define  TXEIM    			 			   							0x1

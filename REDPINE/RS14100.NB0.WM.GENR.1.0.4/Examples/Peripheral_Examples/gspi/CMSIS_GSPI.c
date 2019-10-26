@@ -88,11 +88,11 @@ int main(void)
 	{
 		if(testdata_out[i]==testdata_in[i])
 		{
-			DEBUGOUT("Transmission Successful");
+			//DEBUGOUT("Transmission Successful");
 		}
 		else
 		{
-			DEBUGOUT("Transmission failed");
+			//DEBUGOUT("Transmission failed");
 		}
 	}
 
