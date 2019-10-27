@@ -1180,7 +1180,7 @@ static void SPI_UDMA_Rx_Event(uint32_t event, uint8_t dmaCh,SPI_RESOURCES *spi)
 	switch (event)
 	{
 	case UDMA_EVENT_XFER_DONE:
-		//spi->xfer->rx_cnt    = spi->xfer->num;
+		spi->xfer->rx_cnt    = spi->xfer->num;
 		spi->info->status.busy = 0U;
 		break;
 	case UDMA_EVENT_ERROR:

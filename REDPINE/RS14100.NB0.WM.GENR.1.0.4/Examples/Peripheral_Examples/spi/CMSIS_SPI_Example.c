@@ -4,7 +4,7 @@
 
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
-#define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
+#define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_SLAVE;
@@ -15,14 +15,14 @@ void mySPI_callback(uint32_t event)
 	switch (event)
 	{
 	case ARM_SPI_EVENT_TRANSFER_COMPLETE:
-		spi_done=1;
+		
 		break;
 	case ARM_SPI_EVENT_DATA_LOST:
 		/*  Occurs in slave mode when data is requested/sent by master
             but send/receive/transfer operation has not been started
             and indicates that data is lost. Occurs also in master mode
             when driver cannot transfer data fast enough. */
-		__breakpoint(0);  /* Error: Call debugger or replace with custom error handling */
+		spi_done=1;  /* Error: Call debugger or replace with custom error handling */
 		break;
 	case ARM_SPI_EVENT_MODE_FAULT:
 		/*  Occurs in master mode when Slave Select is deactivated and
@@ -74,13 +74,13 @@ int main(void)
 	SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
 	
   /* Waits until spi_done=0 */
-	while (!spi_done);	
-  spi_done = 0;
+		
+  //spi_done = 0;
   
   /* SS line = ACTIVE = LOW */
-  SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+  //SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
   
-  for(i=0;i<BUFFER_SIZE;i++)
+  /*for(i=0;i<BUFFER_SIZE;i++)
   {
     if(testdata_out[i]==testdata_in[i])
     {
@@ -90,7 +90,19 @@ int main(void)
     {
        break; 
     }
-  }
-while(1);
-	
+  }*/
+	while(1){
+		//while (!spi_done);
+		for(i=0;i<BUFFER_SIZE;i++)
+		{
+			if(testdata_out[i]==testdata_in[i])
+			{
+				continue; 
+			}
+			else
+			{
+				//break; 
+			}
+		}
+	}
 }
