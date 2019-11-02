@@ -3,19 +3,19 @@
 #include "rsi_board.h"
 
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
-#define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
+#define	 SPI_BAUD					1200000  //speed at which data transmitted through SPI
 #define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_SLAVE;
-uint8_t spi_done = 0;
+volatile uint8_t spi_done = 1;
 
 void mySPI_callback(uint32_t event)
 {
 	switch (event)
 	{
 	case ARM_SPI_EVENT_TRANSFER_COMPLETE:
-		
+		spi_done=1;
 		break;
 	case ARM_SPI_EVENT_DATA_LOST:
 		/*  Occurs in slave mode when data is requested/sent by master
@@ -35,11 +35,13 @@ void mySPI_callback(uint32_t event)
 /* Test data buffers */
 uint16_t testdata_out[BUFFER_SIZE]; 
 uint16_t testdata_in [BUFFER_SIZE];
+ARM_SPI_STATUS spi_status;
 
 int main(void)
 {
     
   uint16_t  i = 0;
+	int err_bit = 0;
 	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_SLAVE;
  
  	SystemCoreClockUpdate();
@@ -67,11 +69,24 @@ int main(void)
 	SPIdrv->PowerControl(ARM_POWER_FULL);
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
-	SPIdrv->Control(ARM_SPI_MODE_SLAVE | ARM_SPI_CPOL1_CPHA1  | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	err_bit = SPIdrv->Control(ARM_SPI_MODE_SLAVE | ARM_SPI_SS_SLAVE_HW | ARM_SPI_CPOL0_CPHA1  | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	if (err_bit != 0){
+		
+		while(1){
+			
+		}
+	}
   
   /* SS line = ACTIVE = LOW Used to be here for master, but now slave*/
   
-	SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
+	err_bit = SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
+	
+	if (err_bit != 0){
+		
+		while(1){
+			
+		}
+	}
 	
   /* Waits until spi_done=0 */
 		
@@ -93,6 +108,12 @@ int main(void)
   }*/
 	while(1){
 		//while (!spi_done);
+		spi_status = SPIdrv -> GetStatus();
+		if (spi_done == 1 || spi_status.busy == 0){
+			spi_done = 0;
+			SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
+			
+		}
 		for(i=0;i<BUFFER_SIZE;i++)
 		{
 			if(testdata_out[i]==testdata_in[i])
