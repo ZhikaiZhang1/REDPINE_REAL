@@ -152,22 +152,6 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>1196</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134303576</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>&lt;3&gt;..\..\..\..\..\Peripheral_Library\cmsis_driver\SPI.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\spi\../../../../../Peripheral_Library/cmsis_driver/SPI.c\1196</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
           <LineNumber>1184</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134306466</Address>
@@ -182,11 +166,11 @@
           <Expression>\\spi\../../../../../Peripheral_Library/cmsis_driver/SPI.c\1184</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>1</Number>
           <Type>0</Type>
           <LineNumber>15</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134315416</Address>
+          <Address>134315396</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -198,7 +182,7 @@
           <Expression>\\spi\../../../../Peripheral_Examples/spi/CMSIS_SPI_Example.c\15</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>1033</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -212,22 +196,6 @@
           <Filename>&lt;3&gt;..\..\..\..\..\Peripheral_Library\cmsis_driver\SPI.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\spi\../../../../../Peripheral_Library/cmsis_driver/SPI.c\1033</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>1032</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>&lt;3&gt;..\..\..\..\..\Peripheral_Library\cmsis_driver\SPI.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>

@@ -49,7 +49,10 @@ int main(void)
   
   for(i=0;i<BUFFER_SIZE;i++)
   {
-     testdata_out[i]=i+1;
+		if (i < 50)
+     testdata_out[i]=i;
+		else
+			testdata_out[i] = 50;
   }
    /*program intf pll to 180MHZ*/
   SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
@@ -114,7 +117,7 @@ int main(void)
 			SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
 			
 		}
-		for(i=0;i<BUFFER_SIZE;i++)
+		/*for(i=0;i<BUFFER_SIZE;i++)
 		{
 			if(testdata_out[i]==testdata_in[i])
 			{
@@ -124,6 +127,6 @@ int main(void)
 			{
 				//break; 
 			}
-		}
+		}*/
 	}
 }

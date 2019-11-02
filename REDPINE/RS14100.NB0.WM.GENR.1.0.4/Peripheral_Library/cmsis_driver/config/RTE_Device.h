@@ -1027,7 +1027,7 @@
 #endif
 
 // <o> SSI_SLAVE_SCK Pin <0=>Not Used <1=>GPIO0_11 <2=>GPIO0_17 <3=>GPIO0_28 <4=>GPIO0_72
-#define RTE_SSI_SLAVE_SCK_PORT_ID           3
+#define RTE_SSI_SLAVE_SCK_PORT_ID           1
 #if    (RTE_SSI_SLAVE_SCK_PORT_ID == 0)
 #define  RTE_SSI_SLAVE_SCK                 0
 #elif    (RTE_SSI_SLAVE_SCK_PORT_ID == 1)
