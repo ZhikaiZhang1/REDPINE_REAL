@@ -8637,7 +8637,8 @@ typedef struct
 	union{
 		__IO uint16_t SPI_MODE;                                          /*!< SPI mode Register */
 		struct {
-			__IO uint16_t  SPEED_MODE :  1;                                /*!< This bit enables the SPI high speed mode
+			//__IO uint16_t  SPEED_MODE :  0; 
+																				/*!< This bit enables the SPI high speed mode
                                                                           0 - Low speed mode
                                                                           1 - High speed mode
 			 */

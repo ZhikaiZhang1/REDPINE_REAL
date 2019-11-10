@@ -3,12 +3,12 @@
 #include "rsi_board.h"
 
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
-#define	 SPI_BAUD					1200000  //speed at which data transmitted through SPI
-#define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
+#define	 SPI_BAUD					12000000  //speed at which data transmitted through SPI
+#define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_SLAVE;
-volatile uint8_t spi_done = 1;
+uint8_t spi_done = 1;
 
 void mySPI_callback(uint32_t event)
 {
@@ -72,7 +72,7 @@ int main(void)
 	SPIdrv->PowerControl(ARM_POWER_FULL);
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
-	err_bit = SPIdrv->Control(ARM_SPI_MODE_SLAVE | ARM_SPI_SS_SLAVE_HW | ARM_SPI_CPOL0_CPHA1  | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	err_bit = SPIdrv->Control(ARM_SPI_MODE_SLAVE | ARM_SPI_SS_SLAVE_HW | ARM_SPI_CPOL0_CPHA0  | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
 	if (err_bit != 0){
 		
 		while(1){

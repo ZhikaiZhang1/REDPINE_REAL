@@ -140,7 +140,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"" -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO65554 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO23 -FD0 -FC4000 -FN1 -FF0RS14100_SF_1MB.FLM -FS08012000 -FL0EE000 -FP0($$Device:RS14100_1MB$Flash\RS14100_SF_1MB.FLM)</Name>
+          <Name>-X"" -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO65554 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD0 -FC4000 -FN1 -FF0RS14100_SF_1MB.FLM -FS08012000 -FL0EE000 -FP0($$Device:RS14100_1MB$Flash\RS14100_SF_1MB.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -151,38 +151,6 @@
       <Breakpoint>
         <Bp>
           <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>1184</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134306466</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>&lt;3&gt;..\..\..\..\..\Peripheral_Library\cmsis_driver\SPI.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\spi\../../../../../Peripheral_Library/cmsis_driver/SPI.c\1184</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>15</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134315396</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>&lt;3&gt;..\..\..\..\Peripheral_Examples\spi\CMSIS_SPI_Example.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\spi\../../../../Peripheral_Examples/spi/CMSIS_SPI_Example.c\15</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>1033</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -196,6 +164,38 @@
           <Filename>&lt;3&gt;..\..\..\..\..\Peripheral_Library\cmsis_driver\SPI.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\spi\../../../../../Peripheral_Library/cmsis_driver/SPI.c\1033</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>117</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134315340</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>&lt;3&gt;..\..\..\..\Peripheral_Examples\spi\CMSIS_SPI_Example.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\spi\../../../../Peripheral_Examples/spi/CMSIS_SPI_Example.c\117</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>15</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134315400</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>&lt;3&gt;..\..\..\..\Peripheral_Examples\spi\CMSIS_SPI_Example.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\spi\../../../../Peripheral_Examples/spi/CMSIS_SPI_Example.c\15</Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>
@@ -680,7 +680,7 @@
 
   <Group>
     <GroupName>Board</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
