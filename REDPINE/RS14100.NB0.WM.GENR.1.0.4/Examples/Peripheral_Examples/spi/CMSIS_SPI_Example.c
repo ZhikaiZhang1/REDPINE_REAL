@@ -5,7 +5,7 @@
 
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
-#define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
+#define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 #define PININT_IRQ_HANDLER         IRQ058_Handler                   /* GPIO interrupt IRQ function name            */
 #define PININT_NVIC_NAME           EGPIO_PIN_6_IRQn                 /* GPIO interrupt NVIC interrupt name          */
@@ -91,7 +91,7 @@ void mySPI_callback(uint32_t event)
 }
 
 /* Test data buffers */
-uint16_t testdata_out[BUFFER_SIZE]; 
+uint8_t testdata_out[BUFFER_SIZE]; 
 uint16_t testdata_in [BUFFER_SIZE];
 
 int main(void)
@@ -105,7 +105,7 @@ int main(void)
   
   for(i=0;i<BUFFER_SIZE;i++)
   {
-     testdata_out[i]=i+1;
+     testdata_out[i]=102;
   }
    /*program intf pll to 180MHZ*/
   SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
@@ -125,7 +125,7 @@ int main(void)
 	SPIdrv->PowerControl(ARM_POWER_FULL);
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
-	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
   Set_Up_INT();
 	while (1){
 		if (spi_receive_event){
@@ -143,7 +143,7 @@ int main(void)
 		/* SS line = ACTIVE = LOW */
 		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
 		
-		SPIdrv->Send(testdata_out, BUFFER_SIZE);
+		SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
 		
 		/* Waits until spi_done=0 */
 		while (!spi_done){
