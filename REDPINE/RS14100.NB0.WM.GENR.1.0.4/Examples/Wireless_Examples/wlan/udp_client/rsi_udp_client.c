@@ -132,6 +132,9 @@ volatile bool spi_receive_event = false;
 volatile uint8_t spi_done = 0;
 volatile uint8_t pack_received = 0;
 
+void set_spi (int set){
+	spi_done = 1;
+}
 //interrupt handler
 void PININT_IRQ_HANDLER(void)
 {
