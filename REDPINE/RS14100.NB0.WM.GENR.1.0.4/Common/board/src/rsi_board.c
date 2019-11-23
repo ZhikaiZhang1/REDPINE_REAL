@@ -40,8 +40,8 @@ static const PORT_PIN_T ledBits[] = {{0, 0}, {0, 2}, {0, 12}};
 static const uint32_t ledBitsCnt = sizeof(ledBits) / sizeof(PORT_PIN_T);
 
 #if SELECT_UART_INSTANCE
-extern ARM_DRIVER_USART Driver_USART0;
-static ARM_DRIVER_USART * USARTdrv   = &Driver_USART0;
+//extern ARM_DRIVER_USART Driver_USART0;
+//static ARM_DRIVER_USART * USARTdrv   = &Driver_USART0;
 #else
 extern ARM_DRIVER_USART Driver_ULP_UART;
 static ARM_DRIVER_USART * USARTdrv   = &Driver_ULP_UART;
@@ -96,13 +96,13 @@ void ARM_UART_SignalEvent(uint32_t event)
 void Board_Debug_Init(void)
 {
 	
-	USARTdrv->Uninitialize();
+	/*USARTdrv->Uninitialize();
 	
 	USARTdrv->Initialize   (ARM_UART_SignalEvent);
 
 	USARTdrv->PowerControl (ARM_POWER_FULL);
 
-	/* Enable Receiver and Transmitter lines */
+	// Enable Receiver and Transmitter lines
 	USARTdrv->Control (ARM_USART_CONTROL_TX, 1);
 
 	USARTdrv->Control (ARM_USART_CONTROL_RX, 1);
@@ -120,6 +120,7 @@ NVIC_DisableIRQ(ULPSS_UART_IRQn);
 #endif
 	
 	return ;
+	*/
 } 
 
 #if defined( __GNUC__ )
@@ -262,12 +263,12 @@ void _sys_exit(int return_code)
 void Board_UARTPutSTR(uint8_t *ptr)
 {
 	int i ;
-	for(i =0 ; ptr[i]!='\0' ; i++)
+	/*for(i =0 ; ptr[i]!='\0' ; i++)
 	{
 		send_done=0;
 		USARTdrv->Send(&ptr[i],1);
 		while(send_done==0);
-	}
+	}*/
 	return ;
 }
 
@@ -332,7 +333,7 @@ uint8_t Board_UARTGetChar(void)
 {
 	uint8_t rev[1]={0};
 	recv_done =0;
-	USARTdrv->Receive(&rev,1);
+	/*USARTdrv->Receive(&rev,1);
 	while(recv_done==0)
 	{
 		#if SELECT_UART_INSTANCE
@@ -340,7 +341,7 @@ uint8_t Board_UARTGetChar(void)
 		#else	
 		RSI_ULPUartHandler();
 		#endif	 
-	}
+	}*/
 	return rev[0];
 }
 
@@ -353,7 +354,7 @@ uint8_t Board_UARTGetChar(void)
 void Board_UARTPutChar(uint8_t ch)
 {
 	send_done=0;
-	USARTdrv->Send(&ch, sizeof(ch));
+	/*USARTdrv->Send(&ch, sizeof(ch));
 	while(send_done==0)
 	{
 		#if SELECT_UART_INSTANCE
@@ -361,7 +362,7 @@ void Board_UARTPutChar(uint8_t ch)
 		#else	
 		RSI_ULPUartHandler();
 		#endif	
-	}
+	}*/
 
 	return ;
 }
