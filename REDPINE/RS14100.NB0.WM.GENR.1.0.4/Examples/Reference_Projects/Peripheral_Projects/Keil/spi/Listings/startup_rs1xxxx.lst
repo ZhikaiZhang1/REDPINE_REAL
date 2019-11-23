@@ -804,10 +804,11 @@ ARM Macro Assembler    Page 13
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_rs1xxxx.d -o.\objects\startup_rs1xxxx.o -I.\R
-TE\_Redpine_MCU_library_ -IC:\Keil_v5\ARM\PACK\Redpine\RS14100_DFP\1.0.5\Driver
-\Common\chip\inc -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --p
-redefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\
-listings\startup_rs1xxxx.lst ..\Keil_startup\startup_RS1xxxx.s
+TE\_Redpine_MCU_library_ -IC:\Users\Logan\AppData\Local\Arm\Packs\Redpine\RS141
+00_DFP\1.0.5\Driver\Common\chip\inc -IC:\Keil_v5\ARM\CMSIS\Include --predefine=
+"__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION 
+SETA 528" --list=.\listings\startup_rs1xxxx.lst ..\Keil_startup\startup_RS1xxxx
+.s
 
 
 

@@ -216,7 +216,7 @@ typedef struct {
 }array_sending;
 typedef struct{
 	int length;
-	uint8_t* recv_buffer;
+	uint8_t recv_buffer[48];
 	
 }array_receiving;
 uint8_t global_buf[GLOBAL_BUFF_LEN];

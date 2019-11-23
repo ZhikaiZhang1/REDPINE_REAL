@@ -1166,6 +1166,7 @@ static void SPI_UDMA_Tx_Event (uint32_t event,uint8_t dmaCh, SPI_RESOURCES *spi)
 	case UDMA_EVENT_XFER_DONE:
 		// Update TX buffer info
 		spi->xfer->tx_cnt = spi->xfer->num;
+	  set_spi(1);
 		break;
 	case UDMA_EVENT_ERROR:
 		break;
