@@ -22,6 +22,11 @@
  * Include files
  * */
  
+ //spi includes
+#include "SPI.h"
+#include "RTE_Device.h" 
+#include "rsi_chip.h"
+//wifi includes
  #include "rsi_board.h"
 //! include file to refer data types
 #include "rsi_data_types.h"
@@ -44,11 +49,6 @@
 
 #include "sys/socket.h"
 //#include "select.h"
-
-//spi includes
-#include "SPI.h"
-#include "RTE_Device.h" 
-#include "rsi_chip.h"
 
 //! Access point SSID to connect
 #define SSID              "Logan_conqueror"
@@ -118,7 +118,7 @@
 //SPI defines
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
-#define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
+#define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
 #define PININT_IRQ_HANDLER         IRQ058_Handler                   /* GPIO interrupt IRQ function name            */
 #define PININT_NVIC_NAME           EGPIO_PIN_6_IRQn                 /* GPIO interrupt NVIC interrupt name          */
@@ -129,8 +129,8 @@
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
 volatile bool spi_receive_event = false;
-volatile uint8_t spi_done = 0;
-volatile uint8_t pack_received = 0;
+uint8_t spi_done = 1;
+uint8_t pack_received = 0;
 
 void set_spi (int set){
 	spi_done = 1;
@@ -227,7 +227,7 @@ uint8_t recv_buffer[SEND_LENGTH];
 volatile int pack_length;
 uint8_t SPI_buff[1024];
 /* Test data buffers */
-uint8_t testdata_out[BUFFER_SIZE]; 
+uint16_t testdata_out[BUFFER_SIZE]; 
 uint16_t testdata_in [BUFFER_SIZE];
 
 static void receive_callback(uint32_t sock_no, uint8_t *buffer, uint32_t length){
@@ -366,15 +366,16 @@ int main()
 	array_sending sender;
 	//----------------------------------SPI init---------------------------------------------------------
 	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_MASTER;
+ 
  	SystemCoreClockUpdate();
-	//uint8_t send_buffer[SEND_LENGTH];
-	
-	//initialize spi transfer data
-	for(i=0;i<BUFFER_SIZE;i++)
+  
+  
+  for(i=0;i<BUFFER_SIZE;i++)
   {
-     testdata_out[i]=0;
+     testdata_out[i]=102;
   }
-	SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
+   /*program intf pll to 180MHZ*/
+  SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
   RSI_CLK_SetIntfPllFreq(M4CLK,180000000,40000000);
   
   /*Configure m4 soc to 180mhz*/
@@ -392,7 +393,7 @@ int main()
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
 	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
-  //Set_Up_INT();
+  Set_Up_INT();
 	//-------------------------------SPI Init--------------------------------------------------------------
 #ifdef RSI_WITH_OS	
   
@@ -465,7 +466,7 @@ int main()
 			/* SS line = ACTIVE = LOW */
 			SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
 		}
-		
+		memcpy(sender.send_buffer, testdata_in, pack_length);
 		status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
     if(status != 0)
     {

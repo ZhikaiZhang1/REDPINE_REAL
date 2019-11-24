@@ -1,3 +1,4 @@
+  
 #include "SPI.h"
 #include "RTE_Device.h" 
 #include "rsi_board.h"
@@ -15,25 +16,23 @@
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
-bool spi_receive_event = false;
-int spi_done = 1;
+volatile bool spi_receive_event = false;
+volatile uint8_t spi_done = 0;
 
 void set_spi (int set){
 	spi_done = 1;
 }
-
-
 //interrupt handler
 void PININT_IRQ_HANDLER(void)
 {
 	uint32_t gintStatus;
 
-	//get interrupt status
+	/*get interrupt status*/
 	gintStatus=RSI_EGPIO_GetIntStat(EGPIO,PIN_INT);
 
 	if((gintStatus &EGPIO_PIN_INT_CLR_RISING ))// || (gintStatus &EGPIO_PIN_INT_CLR_FALLING ))
 	{
-		//clear interrupt
+		/*clear interrupt*/
 		RSI_EGPIO_IntClr(EGPIO, PIN_INT ,INTERRUPT_STATUS_CLR);
 		spi_receive_event = true;
 	}
@@ -45,35 +44,33 @@ void PININT_IRQ_HANDLER(void)
 }
 
 static void Set_Up_INT(void){
-	//Configures the system default clock and power configurations
+	/*Configures the system default clock and power configurations*/
  	SystemCoreClockUpdate();
 	
-	//Enable clock for EGPIO module
+	/*Enable clock for EGPIO module*/
 	RSI_CLK_PeripheralClkEnable(M4CLK,EGPIO_CLK,ENABLE_STATIC_CLK);
 
-	//PAD selection
+	/*PAD selection*/
 	RSI_EGPIO_PadSelectionEnable(1);
 
-	//REN enable 
+	/*REN enable */
 	RSI_EGPIO_PadReceiverEnable(M4_GPIO_PIN);
 
-	//Configure default GPIO mode(0) 
+	/*Configure default GPIO mode(0) */
 	RSI_EGPIO_SetPinMux(EGPIO,M4_GPIO_PORT ,M4_GPIO_PIN,EGPIO_PIN_MUX_MODE0);
 
-	//Selects the pin interrupt for the GPIO
+	/*Selects the pin interrupt for the GPIO*/
 	RSI_EGPIO_PinIntSel(EGPIO, PIN_INT , M4_GPIO_PORT, M4_GPIO_PIN);
 
-	//Configures the edge /level interrupt
+	/*Configures the edge /level interrupt*/
 	RSI_EGPIO_SetIntLowLevelEnable(EGPIO,PIN_INT);
 
-	//Unmask the  interrupt
+	/*Unmask the  interrupt*/
 	RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
 
-	//NVIC enable 
+	/*NVIC enable */
 	NVIC_EnableIRQ(PININT_NVIC_NAME);
-	
-	//RSI_EGPIO_IntClr(EGPIO, PIN_INT ,INTERRUPT_STATUS_CLR);
-	return;
+	//return;
 }
 void mySPI_callback(uint32_t event)
 {
@@ -98,14 +95,13 @@ void mySPI_callback(uint32_t event)
 }
 
 /* Test data buffers */
-uint16_t testdata_out[BUFFER_SIZE]; 
+uint8_t testdata_out[BUFFER_SIZE]; 
 uint16_t testdata_in [BUFFER_SIZE];
 
 int main(void)
 {
     
   uint16_t  i = 0;
-	int spi_return;
 	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_MASTER;
  
  	SystemCoreClockUpdate();
@@ -113,7 +109,7 @@ int main(void)
   
   for(i=0;i<BUFFER_SIZE;i++)
   {
-     testdata_out[i]=i+1;
+     testdata_out[i]=102;
   }
    /*program intf pll to 180MHZ*/
   SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
@@ -133,39 +129,34 @@ int main(void)
 	SPIdrv->PowerControl(ARM_POWER_FULL);
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
-	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
+	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
   Set_Up_INT();
 	while (1){
-		/*if (spi_receive_event){
-		while (spi_done == 0);	
+		if (spi_receive_event){
+		while (!spi_done);	
 		  spi_done = 0;
 			SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
 			
 		  SPIdrv->Receive(testdata_in, BUFFER_SIZE);
-			//spi_done = false;
-			while (spi_done == 0);	
-		  
+			while (!spi_done);	
+		  spi_done = 0;
 			SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
 			//spi_receive_event = false;
-		}*/
+		}
 		
 		/* SS line = ACTIVE = LOW */
 		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
-		spi_done = 0;
-		spi_return = SPIdrv->Send(testdata_out, BUFFER_SIZE);
-
 		
+		SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
 		
-		/* Waits until spi_done=1 */
-		while (spi_done == 0){
-			
+		/* Waits until spi_done=0 */
+		while (!spi_done){
 		}
+		spi_done = 0;
 		
-		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
 		/* SS line = ACTIVE = LOW */
-		
-		
-		/*if(spi_receive_event){
+		SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+		if(spi_receive_event){
 			spi_receive_event = false;
 			for(i=0;i<BUFFER_SIZE;i++)
 			{
@@ -175,15 +166,15 @@ int main(void)
 					//continue; 
 					//do this later
 				}
-				else
+				/*else
 				{
 					 break; 
-				}
+				}*/
 				
-			}*/
-		//RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
+			}
+		RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
 	}
 }
 //while(1);
 	
-//}
+}
