@@ -92,12 +92,13 @@ int main(void)
 
 	/*Configure default GPIO mode(0) */
 	RSI_EGPIO_SetPinMux(EGPIO1,PORT ,GPIO_PIN,EGPIO_PIN_MUX_MODE0);
-
+	RSI_EGPIO_SetIntRiseEdgeEnable(EGPIO1, ULP_PIN_INT);
+	RSI_EGPIO_SetIntFallEdgeDisable(EGPIO1, ULP_PIN_INT);
 	/*Selects the pin interrupt for the GPIO*/
 	RSI_EGPIO_PinIntSel(EGPIO1, ULP_PIN_INT , PORT, GPIO_PIN);
 
 	/*Configures the edge /level interrupt*/
-	RSI_EGPIO_SetIntLowLevelEnable(EGPIO1,ULP_PIN_INT);
+	//RSI_EGPIO_SetIntLowLevelEnable(EGPIO1,ULP_PIN_INT);
 
 	/*unmask the  interrupt*/
 	RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);

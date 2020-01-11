@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>RS14100_1MB</Device>
           <Vendor>Redpine Signals</Vendor>
-          <PackID>Redpine.RS14100_DFP.1.0.2</PackID>
-          <PackURL>http://www.redpinesignals.com/downloads/RS14100_DFP/</PackURL>
+          <PackID>Redpine.RS14100_DFP.1.0.5</PackID>
+          <PackURL>http://www.redpinesignals.com/downloads/keil_packs/RS14100_DFP/</PackURL>
           <Cpu>IRAM(0x000000C,0x2FFF4) IROM(0x08012000,0xEE000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -324,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>

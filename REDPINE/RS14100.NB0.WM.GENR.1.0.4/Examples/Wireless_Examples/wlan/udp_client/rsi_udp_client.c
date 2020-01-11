@@ -49,6 +49,8 @@
 #include "SPI.h"
 #include "RTE_Device.h" 
 #include "rsi_chip.h"
+#include "spi_decode.h"
+
 
 //! Access point SSID to connect
 #define SSID              "Logan_conqueror"
@@ -118,37 +120,42 @@
 //SPI defines
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
-#define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
+#define  SPI_BIT_WIDTH		16				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 
-#define PININT_IRQ_HANDLER         IRQ058_Handler                   /* GPIO interrupt IRQ function name            */
-#define PININT_NVIC_NAME           EGPIO_PIN_6_IRQn                 /* GPIO interrupt NVIC interrupt name          */
-#define M4_GPIO_PORT               0                                /* GPIO port number                            */
-#define M4_GPIO_PIN                14                               /* GPIO pin number                             */
-#define PIN_INT                    6
+#define ULP_PININT_IRQ_HANDLER     IRQ018_Handler                   /* GPIO interrupt IRQ function name            */
+#define ULP_PININT_NVIC_NAME       ULP_EGPIO_PIN_IRQn               /* GPIO interrupt NVIC interrupt name          */
+
+#define PORT                       0                                /* GPIO port number                            */
+#define GPIO_PIN                   6                                /* GPIO pin number  (0 to 15)                           */
+#define ULP_PIN_INT                0                                /* ULP pin interrupt                           */
 
 /* SPI Driver */
 extern ARM_DRIVER_SPI Driver_SSI_MASTER;
-volatile bool spi_receive_event = false;
+volatile bool spi_event = false;
 volatile uint8_t spi_done = 0;
 volatile uint8_t pack_received = 0;
 
 //interrupt handler
-void PININT_IRQ_HANDLER(void)
+/**
+ * @brief	Interrupt handler
+ * @return	Nothing
+ */
+void ULP_PININT_IRQ_HANDLER(void)
 {
 	uint32_t gintStatus;
 
 	/*get interrupt status*/
-	gintStatus=RSI_EGPIO_GetIntStat(EGPIO,PIN_INT);
+	gintStatus=RSI_EGPIO_GetIntStat(EGPIO1,ULP_PIN_INT);
 
-	if((gintStatus &EGPIO_PIN_INT_CLR_RISING ))// || (gintStatus &EGPIO_PIN_INT_CLR_FALLING ))
+	if((gintStatus &EGPIO_PIN_INT_CLR_RISING ) || (gintStatus &EGPIO_PIN_INT_CLR_FALLING ))
 	{
 		/*clear interrupt*/
-		RSI_EGPIO_IntClr(EGPIO, PIN_INT ,INTERRUPT_STATUS_CLR);
-		spi_receive_event = true;
+		spi_event = true;
+		RSI_EGPIO_IntClr(EGPIO1, ULP_PIN_INT ,EGPIO_PIN_INT_CLR_RISING);
 	}
 	else
 	{
-		RSI_EGPIO_IntMask(EGPIO , PIN_INT);
+		RSI_EGPIO_IntMask(EGPIO1 , ULP_PIN_INT);
 	}
 	return ;
 }
@@ -158,29 +165,26 @@ static void Set_Up_INT(void){
  	SystemCoreClockUpdate();
 	
 	/*Enable clock for EGPIO module*/
-	RSI_CLK_PeripheralClkEnable(M4CLK,EGPIO_CLK,ENABLE_STATIC_CLK);
+	RSI_ULPSS_PeripheralEnable(ULPCLK,ULP_EGPIO_CLK,ENABLE_STATIC_CLK);
 
-	/*PAD selection*/
-	RSI_EGPIO_PadSelectionEnable(1);
-
-	/*REN enable */
-	RSI_EGPIO_PadReceiverEnable(M4_GPIO_PIN);
+	/*Ren enable for input pin*/
+	RSI_EGPIO_UlpPadReceiverEnable(GPIO_PIN);
 
 	/*Configure default GPIO mode(0) */
-	RSI_EGPIO_SetPinMux(EGPIO,M4_GPIO_PORT ,M4_GPIO_PIN,EGPIO_PIN_MUX_MODE0);
-
+	RSI_EGPIO_SetPinMux(EGPIO1,PORT ,GPIO_PIN,EGPIO_PIN_MUX_MODE0);
+	RSI_EGPIO_SetIntRiseEdgeEnable(EGPIO1, ULP_PIN_INT);
+	RSI_EGPIO_SetIntFallEdgeDisable(EGPIO1, ULP_PIN_INT);
 	/*Selects the pin interrupt for the GPIO*/
-	RSI_EGPIO_PinIntSel(EGPIO, PIN_INT , M4_GPIO_PORT, M4_GPIO_PIN);
+	RSI_EGPIO_PinIntSel(EGPIO1, ULP_PIN_INT , PORT, GPIO_PIN);
 
 	/*Configures the edge /level interrupt*/
-	RSI_EGPIO_SetIntLowLevelEnable(EGPIO,PIN_INT);
+	//RSI_EGPIO_SetIntLowLevelEnable(EGPIO1,ULP_PIN_INT);
 
-	/*Unmask the  interrupt*/
-	RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);
+	/*unmask the  interrupt*/
+	RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
 
 	/*NVIC enable */
-	NVIC_EnableIRQ(PININT_NVIC_NAME);
-	//return;
+	NVIC_EnableIRQ(ULP_EGPIO_PIN_IRQn);
 }
 void mySPI_callback(uint32_t event)
 {
@@ -217,15 +221,18 @@ typedef struct {
 typedef struct{
 	int length;
 	uint8_t* recv_buffer;
-	
 }array_receiving;
+
+
+
 uint8_t global_buf[GLOBAL_BUFF_LEN];
 uint8_t recv_buffer[SEND_LENGTH];
 volatile int pack_length;
 uint8_t SPI_buff[1024];
 /* Test data buffers */
-uint8_t testdata_out[BUFFER_SIZE]; 
+uint16_t testdata_out[BUFFER_SIZE]; 
 uint16_t testdata_in [BUFFER_SIZE];
+wifi_struct* wifi_setup;
 
 static void receive_callback(uint32_t sock_no, uint8_t *buffer, uint32_t length){
 	//receive and spi
@@ -242,6 +249,8 @@ int32_t rsi_udp_client()
   int32_t     packet_count = 0;
 	struct hostent * he;
 	char* hostname = HOSTNAME;
+	
+	
 	//char* psk = PSK;
 #if !(DHCP_MODE)
   uint32_t    ip_addr      = DEVICE_IP;
@@ -262,7 +271,7 @@ int32_t rsi_udp_client()
   //! Scan for Access points
 	
 	sanning_again:
-  status = rsi_wlan_scan((int8_t *)SSID, (uint8_t)CHANNEL_NO, NULL, 0);
+  status = rsi_wlan_scan((int8_t *)(wifi_setup->ssid), (uint8_t)CHANNEL_NO, NULL, 0);
   if(status != RSI_SUCCESS)
   {
 		DEBUGOUT("scanning failed\n");
@@ -272,7 +281,7 @@ int32_t rsi_udp_client()
 
   //! Connect to an Access point
 	connect_again:
-  status = rsi_wlan_connect((int8_t *)SSID, SECURITY_TYPE, (void *)PSK);
+  status = rsi_wlan_connect((int8_t *)(wifi_setup->ssid), SECURITY_TYPE, (void *)(wifi_setup->psk));
   if(status != RSI_SUCCESS)
   {
 		DEBUGOUT("connecting failed\n");
@@ -295,7 +304,7 @@ int32_t rsi_udp_client()
     //return status;
   }
 
-	if ((he = gethostbyname ("Logan")) == NULL) {
+	if ((he = gethostbyname (wifi_setup->host_name)) == NULL) {
     	goto Find_Host;
         //perror ("gethostbyname");
         //exit (1);
@@ -319,48 +328,18 @@ int32_t rsi_udp_client()
   server_addr.sin_port = htons(SERVER_PORT);
 	Find_Host:
 	
-	//he = gethostbyname("Logan");
-  //! Set IP address to localhost
-  //server_addr.sin_addr.s_addr = * ((struct in_addr *) he-> h_addr);
 	server_addr.sin_addr = * ((struct in_addr *) he-> h_addr_list[0]);
-/*
-  while(packet_count < NUMBER_OF_PACKETS)
-  {
-    //! Send data on socket
-    status = rsi_sendto(client_socket, (int8_t *)"Hello from UDP client!!!", (sizeof("Hello from UDP client!!!") - 1), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
-    if(status < 0)
-    {
-      status = rsi_wlan_get_status();
-      rsi_shutdown(client_socket, 0);
-      return status;
-    }
-
-    //! Increase packet count
-    packet_count++;
-  }
-	*/
   return 0;
 }
 
-void main_loop(void)
-{
-  while(1)
-  {
-    ////////////////////////
-    //! Application code ///
-    ////////////////////////
-
-    //! event loop 
-    rsi_wireless_driver_task();
-
-  }
-}
 
 int main()
 {
 	int i;
   int32_t status;
 	array_sending sender;
+	uint8_t testing [1024];
+	char string_test [100];
 	//----------------------------------SPI init---------------------------------------------------------
 	ARM_DRIVER_SPI* SPIdrv = &Driver_SSI_MASTER;
  	SystemCoreClockUpdate();
@@ -371,7 +350,7 @@ int main()
   {
      testdata_out[i]=0;
   }
-	SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900 ;   
+	SPI_MEM_MAP_PLL(INTF_PLL_500_CTRL_REG9) = 0xD900;   
   RSI_CLK_SetIntfPllFreq(M4CLK,180000000,40000000);
   
   /*Configure m4 soc to 180mhz*/
@@ -389,8 +368,27 @@ int main()
   
 	/* Configure the SPI to Master, 16-bit mode @10000 kBits/sec */
 	SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0 | ARM_SPI_SS_MASTER_HW_OUTPUT | ARM_SPI_DATA_BITS(SPI_BIT_WIDTH), SPI_BAUD);	 
-  //Set_Up_INT();
+  Set_Up_INT();
 	//-------------------------------SPI Init--------------------------------------------------------------
+	
+	//------------------------------getting initializations------------------------------------------------
+	SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
+		
+	SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
+		
+		/* Waits until spi_done=0 */
+	while (!spi_done){
+	}
+	spi_done = 0;
+			
+			/* SS line = ACTIVE = LOW */
+	SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+	memcpy(testing, (uint8_t*) testdata_in, 1024);
+	spi_decode(testing, wifi_setup);
+	memcpy(string_test, (uint8_t*)wifi_setup->psk, sizeof(wifi_setup->psk));
+			
+	//-------------------------------getting initialization-------------------------------------------------
+	
 #ifdef RSI_WITH_OS	
   
   rsi_task_handle_t wlan_task_handle = NULL;
@@ -450,19 +448,23 @@ int main()
 		if (pack_received == 1){
 			pack_received = 0;
 			memcpy(testdata_out, SPI_buff, pack_length);
-			SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
-		
-			SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
-		
-		/* Waits until spi_done=0 */
-			while (!spi_done){
-			}
-			spi_done = 0;
+			if(spi_event){
+				spi_event = false;
+				SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
 			
-			/* SS line = ACTIVE = LOW */
-			SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+				SPIdrv->Transfer(testdata_out, testdata_in, BUFFER_SIZE);
+			
+			/* Waits until spi_done=0 */
+				while (!spi_done){
+				}
+				spi_done = 0;
+				
+				/* SS line = ACTIVE = LOW */
+				SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+				rsi_delay_ms(10);
 		}
-		
+		}
+		memcpy(sender.send_buffer, testdata_in, pack_length);
 		status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
     if(status != 0)
     {
@@ -475,7 +477,9 @@ int main()
 		spi_done = 0;*/
 		
     //! event loop 
+		RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
     rsi_wireless_driver_task();
+		
   }
 #endif
 	rsi_shutdown(client_socket, 0);

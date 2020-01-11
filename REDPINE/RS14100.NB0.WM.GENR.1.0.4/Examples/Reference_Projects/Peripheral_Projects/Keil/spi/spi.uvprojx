@@ -336,7 +336,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>__CC_ARM DEBUG_UART</Define>
+              <Define>__CC_ARM</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\Peripheral_Library\systemlevel\inc</IncludePath>
             </VariousControls>

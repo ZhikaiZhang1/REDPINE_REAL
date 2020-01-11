@@ -30,7 +30,7 @@
 #define PININT_IRQ_HANDLER         IRQ059_Handler                   /* GPIO interrupt IRQ function name            */
 #define PININT_NVIC_NAME           EGPIO_PIN_7_IRQn                 /* GPIO interrupt NVIC interrupt name          */
 #define M4_GPIO_PORT               0                                /* GPIO port number                            */
-#define M4_GPIO_PIN                15                                /* GPIO pin number                             */
+#define M4_GPIO_PIN                6                                /* GPIO pin number                             */
 #define PIN_INT                    7                                /* Pin  interrupt number(0 to 7)               */
 
 /* Private variables ----------------------------------------------------------------------------------------------*/
@@ -89,6 +89,8 @@ int main(void)
 
 	/*REN enable */
 	RSI_EGPIO_PadReceiverEnable(M4_GPIO_PIN);
+	RSI_EGPIO_SetIntRiseEdgeEnable(EGPIO, PIN_INT);
+	RSI_EGPIO_SetIntFallEdgeDisable(EGPIO, PIN_INT);
 
 	/*Configure default GPIO mode(0) */
 	RSI_EGPIO_SetPinMux(EGPIO,M4_GPIO_PORT ,M4_GPIO_PIN,EGPIO_PIN_MUX_MODE0);
@@ -97,7 +99,7 @@ int main(void)
 	RSI_EGPIO_PinIntSel(EGPIO, PIN_INT , M4_GPIO_PORT, M4_GPIO_PIN);
 
 	/*Configures the edge /level interrupt*/
-	RSI_EGPIO_SetIntLowLevelEnable(EGPIO,PIN_INT);
+	//RSI_EGPIO_SetIntLowLevelEnable(EGPIO,PIN_INT);
 
 	/*Unmask the  interrupt*/
 	RSI_EGPIO_IntUnMask(EGPIO , PIN_INT);

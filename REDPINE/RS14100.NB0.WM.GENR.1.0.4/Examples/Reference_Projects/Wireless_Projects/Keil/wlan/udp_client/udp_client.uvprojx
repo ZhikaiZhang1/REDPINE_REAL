@@ -338,7 +338,7 @@
               <MiscControls>--reduce_paths</MiscControls>
               <Define>__CC_ARM RSI_SAMPLE_HAL RSI_WLAN_ENABLE RSI_M4_INTERFACE RSI_LITTLE_ENDIAN NO_AES ROM_WIRELESS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\..\Wireless_Library\include;..\..\..\..\..\..\Wireless_Library\hal_WiSeMcu\inc;..\..\..\..\..\..\Wireless_Library\rom;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Peripheral_Library\aes_code\cyassl\ctaocrypt;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Wireless_Library\nwk\applications;..\..\..\..\..\Wireless_Examples\utilities\certificates;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\Wireless_Examples\wlan\udp_client;..\..\..\..\..\..\rs9116\platforms\garminos;..\..\..\..\..\..\rs9116\platforms\garminos\bsd;..\..\..\..\..\..\rs9116\platforms\garminos\wln_soc_impl;..\..\..\..\..\..\rs9116\platforms\garminos\bsd\sys;..\..\..\..\..\..\modules\grm;..\..\..\..\..\..\modules\grm\legacy;..\..\..\..\..\..\modules\UTL;..\..\..\..\..\..\modules\TSK\include\tsk;..\..\..\..\..\..\modules\UTL\assert;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc</IncludePath>
+              <IncludePath>..\..\..\..\..\..\Wireless_Library\include;..\..\..\..\..\..\Wireless_Library\hal_WiSeMcu\inc;..\..\..\..\..\..\Wireless_Library\rom;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Peripheral_Library\aes_code\cyassl\ctaocrypt;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Wireless_Library\nwk\applications;..\..\..\..\..\Wireless_Examples\utilities\certificates;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\Wireless_Examples\wlan\udp_client;..\..\..\..\..\..\rs9116\platforms\garminos;..\..\..\..\..\..\rs9116\platforms\garminos\bsd;..\..\..\..\..\..\rs9116\platforms\garminos\wln_soc_impl;..\..\..\..\..\..\rs9116\platforms\garminos\bsd\sys;..\..\..\..\..\..\modules\grm;..\..\..\..\..\..\modules\grm\legacy;..\..\..\..\..\..\modules\UTL;..\..\..\..\..\..\modules\TSK\include\tsk;..\..\..\..\..\..\modules\UTL\assert;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc;..\..\..\..\..\..\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -526,6 +526,11 @@
               <FileName>gethost_implementation.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\gethost_implementation.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\spi_decode.c</FilePath>
             </File>
           </Files>
         </Group>
