@@ -2,7 +2,7 @@
 #include <stdlib.h>
 //#include <sys/select.h>
 
-#include "GRM_pub.h"
+//#include "GRM_pub.h"
 //#include "UTL_pub_assert.h"
 //#include "SCL_pub_errno.h"
 
