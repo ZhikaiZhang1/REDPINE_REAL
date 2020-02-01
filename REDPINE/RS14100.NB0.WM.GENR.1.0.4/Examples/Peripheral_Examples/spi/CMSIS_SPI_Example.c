@@ -4,7 +4,7 @@
 #include "rsi_board.h"
 #include "rsi_chip.h"
 
-#define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
+#define  BUFFER_SIZE      500     //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
 #define  SPI_BIT_WIDTH		8				//SPI bit width can be 16/8 for 16/8 bit data transfer 
 

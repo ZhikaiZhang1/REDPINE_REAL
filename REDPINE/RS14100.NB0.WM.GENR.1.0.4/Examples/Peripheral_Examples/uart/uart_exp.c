@@ -125,13 +125,20 @@ int main(void)
 
 	/*Initialize USART(Enable Clock)*/
 	USARTdrv->Initialize   (ARM_USART_SignalEvent);
-
+	status = USARTdrv->GetStatus();
+	
 	/*Power up the USART peripheral */
 	USARTdrv->PowerControl (ARM_POWER_FULL);
+	status = USARTdrv->GetStatus();
+	
 
 	/* Enable Receiver and Transmitter lines */
 	USARTdrv->Control (ARM_USART_CONTROL_TX, 1);
+	status = USARTdrv->GetStatus();
+	
 	USARTdrv->Control (ARM_USART_CONTROL_RX, 1);
+	status = USARTdrv->GetStatus();
+	
 
 	/*Configure the USART to 9600 Bits/sec */
 	USARTdrv->Control(ARM_USART_MODE_ASYNCHRONOUS|
@@ -139,16 +146,31 @@ int main(void)
 			ARM_USART_PARITY_NONE |
 			ARM_USART_STOP_BITS_1 |
 			ARM_USART_FLOW_CONTROL_NONE,BAUD_VALUE);
-
-	/*Receives data*/
-	USARTdrv->Receive(rx_buffer,sizeof(rx_buffer));
+	
+	status = USARTdrv->GetStatus();
+	
+	
+	#if SELECT_UART_INSTANCE
+	NVIC_DisableIRQ(USART0_IRQn);
+	#else	
+	NVIC_DisableIRQ(ULPSS_UART_IRQn);
+	#endif
 
 	/*sends data*/
 	USARTdrv->Send(tx_buffer, sizeof(tx_buffer));
+	
+	status = USARTdrv->GetStatus();
 
+	/*Receives data*/
+	USARTdrv->Receive(rx_buffer,sizeof(rx_buffer));		
+	
+	status = USARTdrv->GetStatus();
+	
 	/*wait for the receive complete event*/
-	while(read_rx_cnt==0);
-
+	while(read_rx_cnt==0) {
+		status = USARTdrv->GetStatus();
+	}
+	
 	/*compare both send receive data*/
 	for(i=0;i<BUFFER_SIZE;i++)
 	{
@@ -165,10 +187,10 @@ int main(void)
 			break;
 		}
 	}
-
+	
 	while (forever)		
 	{
-
+		
 	}
 	/*Statement will never reach here , just to satisfy the standard main*/
 	return 0;

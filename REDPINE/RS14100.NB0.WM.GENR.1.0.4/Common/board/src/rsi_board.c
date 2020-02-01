@@ -40,8 +40,8 @@ static const PORT_PIN_T ledBits[] = {{0, 0}, {0, 2}, {0, 12}};
 static const uint32_t ledBitsCnt = sizeof(ledBits) / sizeof(PORT_PIN_T);
 
 #if SELECT_UART_INSTANCE
-//extern ARM_DRIVER_USART Driver_USART0;
-//static ARM_DRIVER_USART * USARTdrv   = &Driver_USART0;
+extern ARM_DRIVER_USART Driver_USART0;
+static ARM_DRIVER_USART * USARTdrv   = &Driver_USART0;
 #else
 extern ARM_DRIVER_USART Driver_ULP_UART;
 static ARM_DRIVER_USART * USARTdrv   = &Driver_ULP_UART;
@@ -96,7 +96,7 @@ void ARM_UART_SignalEvent(uint32_t event)
 void Board_Debug_Init(void)
 {
 	
-	/*USARTdrv->Uninitialize();
+	USARTdrv->Uninitialize();
 	
 	USARTdrv->Initialize   (ARM_UART_SignalEvent);
 
@@ -120,7 +120,7 @@ NVIC_DisableIRQ(ULPSS_UART_IRQn);
 #endif
 	
 	return ;
-	*/
+	
 } 
 
 #if defined( __GNUC__ )

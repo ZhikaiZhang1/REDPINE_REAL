@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>RS14100_1MB</Device>
           <Vendor>Redpine Signals</Vendor>
-          <PackID>Redpine.RS14100_DFP.1.0.0</PackID>
-          <PackURL>http://www.redpinesignals.com/downloads/RS14100_DFP/</PackURL>
+          <PackID>Redpine.RS14100_DFP.1.0.5</PackID>
+          <PackURL>http://www.redpinesignals.com/downloads/keil_packs/RS14100_DFP/</PackURL>
           <Cpu>IRAM(0x000000C,0x2FFF4) IROM(0x08012000,0xEE000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -81,8 +81,8 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin --output=output\ap_udp_echo.bin Objects\ap_udp_echo.axf</UserProg1Name>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name>C:\Users\edche\Desktop\REDPINE_REAL\REDPINE\RS14100.NB0.WM.GENR.1.0.4\Utils\isp_scripts\post_build_script.bat $L@L $KARM</UserProg1Name>
             <UserProg2Name>C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe -c -s --Output=output\ap_udp_echo.asm Objects\ap_udp_echo.axf</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -324,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>

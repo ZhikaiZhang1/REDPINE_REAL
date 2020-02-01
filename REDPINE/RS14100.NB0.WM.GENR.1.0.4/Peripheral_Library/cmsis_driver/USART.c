@@ -1182,7 +1182,7 @@ static int32_t USART_Send_Data(  const void *data, uint32_t num,USART_RESOURCES 
 	{
 		return ARM_DRIVER_ERROR_PARAMETER;
 	}
-	if ((usart->info->flags & USART_FLAG_CONFIGURED) == 0U)
+	if ((usart->info->flags & USART_FLAG_CONFIGURED) == 0)
 	{
 		// USART is not configured (mode not selected)
 		return ARM_DRIVER_ERROR;
