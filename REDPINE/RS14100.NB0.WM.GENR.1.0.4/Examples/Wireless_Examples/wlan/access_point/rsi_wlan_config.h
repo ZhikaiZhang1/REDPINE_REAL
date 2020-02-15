@@ -69,7 +69,7 @@
 /*=======================================================================*/
 
 //! RSI_BAND_2P4GHZ(2.4GHz) or RSI_BAND_5GHZ(5GHz) or RSI_DUAL_BAND
-#define RSI_BAND                    RSI_BAND_2P4GHZ            
+#define RSI_BAND                    RSI_BAND_5GHZ            
 
 /*=======================================================================*/
 
@@ -427,13 +427,13 @@
 //! To set custom feature select bit map 
 #define RSI_CONFIG_AP_CUSTOM_FEAT_BIT_MAP         0
 //! RSI_BAND_2P4GHZ(2.4GHz) or RSI_BAND_5GHZ(5GHz) or RSI_DUAL_BAND
-#define RSI_CONFIG_AP_BAND                        RSI_BAND_2P4GHZ 
+#define RSI_CONFIG_AP_BAND                        RSI_BAND_5GHZ 
 //! Tx power level
 #define RSI_CONFIG_AP_TX_POWER                    RSI_POWER_LEVEL_HIGH
 //! AP SSID
 #define RSI_CONFIG_AP_SSID                        "REDPINE_AP"
 //! RSI_BAND_2P4GHZ(2.4GHz) or RSI_BAND_5GHZ(5GHz) or RSI_DUAL_BAND
-#define RSI_CONFIG_AP_BAND                        RSI_BAND_2P4GHZ
+#define RSI_CONFIG_AP_BAND                        RSI_BAND_5GHZ
 //! To configure AP channle number
 #define RSI_CONFIG_AP_CHANNEL                     6
 //! To configure security type
@@ -486,7 +486,7 @@
 //! To configure SSID
 #define RSI_CONFIG_CLIENT_SSID                    "REDPINE_AP"
 //! RSI_BAND_2P4GHZ(2.4GHz) or RSI_BAND_5GHZ(5GHz) or RSI_DUAL_BAND
-#define RSI_CONFIG_CLIENT_BAND                    RSI_BAND_2P4GHZ
+#define RSI_CONFIG_CLIENT_BAND                    RSI_BAND_5GHZ
 //! To configure channel number
 #define RSI_CONFIG_CLIENT_CHANNEL                 0
 //! To configure security type
@@ -545,7 +545,7 @@
 //! To configure SSID
 #define RSI_CONFIG_EAP_SSID                       "REDPINE_AP"
 //! RSI_BAND_2P4GHZ(2.4GHz) or RSI_BAND_5GHZ(5GHz) or RSI_DUAL_BAND
-#define RSI_CONFIG_EAP_BAND                       RSI_BAND_2P4GHZ
+#define RSI_CONFIG_EAP_BAND                       RSI_BAND_5GHZ
 //! To set security type
 #define RSI_CONFIG_EAP_SECURITY_TYPE              RSI_WPA2_EAP
 //! To set encryption type

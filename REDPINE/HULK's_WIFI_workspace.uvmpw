@@ -9,8 +9,6 @@
 
   <project>
     <PathAndName>.\RS14100.NB0.WM.GENR.1.0.4\Examples\Reference_Projects\Wireless_Projects\Keil\wlan\udp_client\udp_client.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
@@ -19,6 +17,20 @@
 
   <project>
     <PathAndName>.\RS14100.NB0.WM.GENR.1.0.4\Examples\Reference_Projects\Peripheral_Projects\Keil\spi\spi.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\RS14100.NB0.WM.GENR.1.0.4\Examples\Reference_Projects\Wireless_Projects\Keil\wlan\access_point\access_point.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\RS14100.NB0.WM.GENR.1.0.4\Examples\Reference_Projects\Wireless_Projects\Keil\wlan\concurrent_mode\concurrent_mode.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+    <NodeIsExpanded>1</NodeIsExpanded>
+  </project>
+
+  <project>
+    <PathAndName>.\RS14100.NB0.WM.GENR.1.0.4\Examples\Reference_Projects\Peripheral_Projects\Keil\ethernet\ethernet.uvprojx</PathAndName>
   </project>
 
 </ProjectWorkspace>

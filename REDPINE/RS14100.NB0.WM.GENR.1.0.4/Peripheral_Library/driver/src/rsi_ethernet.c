@@ -657,10 +657,10 @@ error_t RSI_ETH_MAC_DMAInit(RSI_ETH_HANDLE_T pETHHandle)
 	//! Apply soft reset to DMA
 	
 	pETH->BUS_MODE_REG0_b.SWR = 1;
-	
 	//! Wait untill soft reset is done
-	while(pETH->BUS_MODE_REG0 & DMA_BUS_MODE_SOFTREST);
+
 	
+	while(pETH->BUS_MODE_REG0 & DMA_BUS_MODE_SOFTREST);
   //! Hard coded Burst length to 64
   pETH->BUS_MODE_REG0_b.PBL =  1;
 

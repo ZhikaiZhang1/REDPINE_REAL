@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>RS14100_1MB</Device>
           <Vendor>Redpine Signals</Vendor>
-          <PackID>Redpine.RS14100_DFP.1.0.0</PackID>
-          <PackURL>http://www.redpinesignals.com/downloads/RS14100_DFP/</PackURL>
+          <PackID>Redpine.RS14100_DFP.1.0.5</PackID>
+          <PackURL>http://www.redpinesignals.com/downloads/keil_packs/RS14100_DFP/</PackURL>
           <Cpu>IRAM(0x000000C,0x2FFF4) IROM(0x08012000,0xEE000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -311,7 +312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -324,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -336,7 +338,7 @@
               <MiscControls>--reduce_paths</MiscControls>
               <Define>__CC_ARM RSI_SAMPLE_HAL RSI_WLAN_ENABLE RSI_M4_INTERFACE RSI_LITTLE_ENDIAN NO_AES ROM_WIRELESS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\..\Wireless_Library\include;..\..\..\..\..\..\Wireless_Library\hal_WiSeMcu\inc;..\..\..\..\..\..\Wireless_Library\rom;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Peripheral_Library\aes_code\cyassl\ctaocrypt;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Wireless_Library\nwk\applications;..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src;..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src;..\..\..\..\..\Wireless_Examples\utilities\certificates;..\..\..\..\..\..\Wireless_Library\nwk\applications\http_server;..\..\..\..\..\..\Wireless_Library\zigbee\profiles\include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\Wireless_Examples\wlan\access_point</IncludePath>
+              <IncludePath>..\..\..\..\..\..\Wireless_Library\include;..\..\..\..\..\..\Wireless_Library\hal_WiSeMcu\inc;..\..\..\..\..\..\Wireless_Library\rom;..\..\..\..\..\..\COMMON\chip\inc;..\..\..\..\..\..\COMMON\cmsis;..\..\..\..\..\..\Peripheral_Library\driver\inc;..\..\..\..\..\..\Peripheral_Library\systemlevel\inc;..\..\..\..\..\..\Peripheral_Library\rom_driver\inc;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Peripheral_Library\aes_code\cyassl\ctaocrypt;..\..\..\..\..\..\COMMON\board\inc;..\..\..\..\..\..\Wireless_Library\nwk\applications;..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src;..\..\..\..\..\..\Wireless_Library\nwk\applications\mqtt_client\src\MQTTPacket\src;..\..\..\..\..\Wireless_Examples\utilities\certificates;..\..\..\..\..\..\Wireless_Library\nwk\applications\http_server;..\..\..\..\..\..\Wireless_Library\zigbee\profiles\include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\CMSIS\Driver\Include;..\..\..\..\..\..\Peripheral_Library\cmsis_driver\config;..\..\..\..\..\Wireless_Examples\wlan\access_point;..\..\..\..\..\..\rs9116\platforms\garminos;..\..\..\..\..\..\rs9116\platforms\garminos\bsd;..\..\..\..\..\..\rs9116\platforms\garminos\wln_soc_impl;..\..\..\..\..\..\rs9116\platforms\garminos\bsd\sys;..\..\..\..\..\..\modules\grm;..\..\..\..\..\..\modules\grm\legacy;..\..\..\..\..\..\modules\UTL;..\..\..\..\..\..\modules\UTL\assert</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -664,6 +666,21 @@
               <FileName>rsi_ap_start.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Wireless_Examples\wlan\access_point\rsi_ap_start.c</FilePath>
+            </File>
+            <File>
+              <FileName>gethost_implementation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\udp_client\gethost_implementation.c</FilePath>
+            </File>
+            <File>
+              <FileName>GRM_pub.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\..\..\modules\grm\GRM_pub.h</FilePath>
+            </File>
+            <File>
+              <FileName>socket.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\..\..\rs9116\platforms\garminos\bsd\sys\socket.h</FilePath>
             </File>
           </Files>
         </Group>

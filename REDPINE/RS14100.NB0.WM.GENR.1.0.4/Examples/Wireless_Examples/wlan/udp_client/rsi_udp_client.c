@@ -79,7 +79,7 @@
 
 #endif
 
-#define HOSTNAME "Logan"
+#define HOSTNAME "Logan_conqueror"
 //select defines
 #define FD_CLR(fd, set)   (((set)->fd_bits[(fd)/8]) &= ~(1 << ((fd) & 7)))
 #define FD_SET(fd, set)   (((set)->fd_bits[(fd)/8]) |= (1 << ((fd) & 7)))
@@ -126,10 +126,13 @@ typedef struct{
 }array_receiving;
 uint8_t global_buf[GLOBAL_BUFF_LEN];
 uint8_t recv_buffer[SEND_LENGTH];
+uint8_t packet_recieved = 0;
 
 static void receive_callback(uint32_t sock_no, uint8_t *buffer, uint32_t length){
-	//receive and spi
 	array_receiving *SPI_buff;
+	packet_recieved = 1;
+	//receive and spi
+
 	//DEBUGOUT("Receive callback\n");
 	//memcpy(SPI_buff, (uint8_t)* &length, 1);
 	memcpy(SPI_buff, (array_receiving *) buffer, length);
@@ -317,6 +320,8 @@ int main()
 	//--------------------------------------------------------------
   while(1)
   {
+		if (packet_recieved == 1){
+		}
 		status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
     if(status != 0)
     {
