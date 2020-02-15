@@ -461,9 +461,7 @@ status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi
   {
 	// Server sends user code in binary form via Wi-Fi
 		Recieve_upgrade:
-			while ((status = rsi_recvfrom(client_socket, (int8_t *) send_to_slave, sizeof(send_to_slave), 0, (struct rsi_sockaddr *)&server_addr, &addr_size)) == -1){
-				// Keep trying to recieve bytes from server
-			}
+			receive_callback(client_socket, send_to_slave, BUFFER_SIZE);
 		
 		// SPI sends recieved binary upgrade to STM32
 		Send_pack:
