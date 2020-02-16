@@ -147,13 +147,6 @@ static void receive_callback(uint32_t sock_no, uint8_t *buffer, uint32_t length)
 	memcpy(SPI_buff, buffer, length);
 }
 
-/*static void receive_callback(uint32_t sock_no, uint8_t *buffer, uint32_t length){
-	packet_received = 1;
-	
-//array_receiving *SPI_buff;
-//	memcpy(SPI_buff, (array_receiving *) buffer, length);
-}*/
-
 int32_t rsi_ap_start()
 {
   int32_t     server_socket, new_socket;
@@ -172,16 +165,15 @@ int32_t rsi_ap_start()
 
 
   //! WC initialization
-  status = rsi_wireless_init(9, 0); //9 for concurrent
+  status = rsi_wireless_init(6, 0);
   if(status != RSI_SUCCESS)
   {
     return status;
   }
 
-  //! Configure IP	
-    status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_DHCP, (uint8_t *)&ip_addr, (uint8_t *)&network_mask, (uint8_t *)&gateway, NULL, 0,0);
-	//status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_DHCP, 0, 0, 0, NULL, 0,1);
-  if(status != RSI_SUCCESS)//used to be RSI_DHCP -> last parameter: vap_id is 1 if acess point (otherwise 0, which was the intitial state)
+  //! Configure IP 
+  status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_STATIC, (uint8_t *)&ip_addr, (uint8_t *)&network_mask, (uint8_t *)&gateway, NULL, 0,0);
+  if(status != RSI_SUCCESS)
   {
     return status;
   }
@@ -194,7 +186,8 @@ int32_t rsi_ap_start()
     }
 
 
-  server_socket = rsi_socket(AF_INET, SOCK_STREAM, 0); //! Create socket
+  //! Create socket
+  server_socket = rsi_socket(AF_INET, SOCK_STREAM, 0);
   if(server_socket < 0)
   {
     status = rsi_wlan_get_status();
@@ -211,7 +204,7 @@ int32_t rsi_ap_start()
   server_addr.sin_port = htons(DEVICE_PORT);
 
 
-
+/*
   //! Bind socket
   status = rsi_bind(server_socket, (struct rsi_sockaddr *) &server_addr, sizeof(server_addr));
   if(status != RSI_SUCCESS)
@@ -232,7 +225,7 @@ int32_t rsi_ap_start()
 
   addr_size = sizeof(server_socket);
 
- /* ! Socket accept
+  //! Socket accept
   new_socket = rsi_accept(server_socket, (struct rsi_sockaddr *)&client_addr, &addr_size);
   if(new_socket < 0)
   {
@@ -240,8 +233,8 @@ int32_t rsi_ap_start()
     rsi_shutdown(server_socket, 0);
     return status;
   }
-
-  while(packet_count < NUMBER_OF_PACKETS)
+*/
+/*  while(packet_count < NUMBER_OF_PACKETS)
   {
     recv_size = RECV_BUFFER_SIZE;
 
@@ -275,6 +268,7 @@ int32_t rsi_ap_start()
   {
     return status;
   }*/
+	
   return 0;
 }
 
