@@ -50,7 +50,7 @@
 #define SSID              "REDPINE_AP"
 
 //! Channel number
-#define CHANNEL_NO              36		//11
+#define CHANNEL_NO              36		//originally using 11, now using 36
 
 //! Security type
 #define SECURITY_TYPE     RSI_WPA2
@@ -67,6 +67,7 @@
 //! DTIM interval 
 #define DTIM_INTERVAL           4
 
+#define DHCP_MODE         1
 
 //! IP address of the module 
 //! E.g: 0x650AA8C0 == 192.168.10.101
@@ -171,15 +172,16 @@ int32_t rsi_ap_start()
 
 
   //! WC initialization
-  status = rsi_wireless_init(9, 0); 
+  status = rsi_wireless_init(9, 0); //9 for concurrent
   if(status != RSI_SUCCESS)
   {
     return status;
   }
 
-  //! Configure IP 
-  status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_DHCP, (uint8_t *)&ip_addr, (uint8_t *)&network_mask, (uint8_t *)&gateway, NULL, 0,1);
-  if(status != RSI_SUCCESS)//used to be RSI_DHCP -> last parameter: vap_id is 1 if acess point (otherwise 0, whcih was the intitial state)
+  //! Configure IP	
+    status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_DHCP, (uint8_t *)&ip_addr, (uint8_t *)&network_mask, (uint8_t *)&gateway, NULL, 0,0);
+	//status = rsi_config_ipaddress(RSI_IP_VERSION_4, RSI_DHCP, 0, 0, 0, NULL, 0,1);
+  if(status != RSI_SUCCESS)//used to be RSI_DHCP -> last parameter: vap_id is 1 if acess point (otherwise 0, which was the intitial state)
   {
     return status;
   }
