@@ -117,6 +117,12 @@
 //! Wireless driver task stack size
 #define RSI_DRIVER_TASK_STACK_SIZE  500
 
+//! Multicast group IP address
+#define MULTICAST_GROUP_ADDRESS 0x010000EF
+
+//! Flags
+#define FLAGS         0  
+
 //SPI defines
 #define  BUFFER_SIZE      1024      //Number of data to be sent through SPI
 #define	 SPI_BAUD					1000000  //speed at which data transmitted through SPI
@@ -135,6 +141,9 @@ volatile bool spi_event = false;
 volatile uint8_t spi_done = 0;
 volatile uint8_t pack_received = 0;
 
+//Multicast
+uint32_t    multicast_ip    = MULTICAST_GROUP_ADDRESS;
+
 //interrupt handler
 /**
  * @brief	Interrupt handler
@@ -152,6 +161,7 @@ void ULP_PININT_IRQ_HANDLER(void)
 		/*clear interrupt*/
 		spi_event = true;
 		RSI_EGPIO_IntClr(EGPIO1, ULP_PIN_INT ,EGPIO_PIN_INT_CLR_RISING);
+		RSI_EGPIO_IntClr(EGPIO1, ULP_PIN_INT ,EGPIO_PIN_INT_CLR_FALLING);
 	}
 	else
 	{
@@ -173,7 +183,7 @@ static void Set_Up_INT(void){
 	/*Configure default GPIO mode(0) */
 	RSI_EGPIO_SetPinMux(EGPIO1,PORT ,GPIO_PIN,EGPIO_PIN_MUX_MODE0);
 	RSI_EGPIO_SetIntRiseEdgeEnable(EGPIO1, ULP_PIN_INT);
-	RSI_EGPIO_SetIntFallEdgeDisable(EGPIO1, ULP_PIN_INT);
+	RSI_EGPIO_SetIntFallEdgeEnable(EGPIO1, ULP_PIN_INT);
 	/*Selects the pin interrupt for the GPIO*/
 	RSI_EGPIO_PinIntSel(EGPIO1, ULP_PIN_INT , PORT, GPIO_PIN);
 
@@ -212,7 +222,7 @@ void mySPI_callback(uint32_t event)
 int32_t     client_socket;
 struct      rsi_sockaddr_in server_addr;
 
-#define SEND_LENGTH 48
+#define SEND_LENGTH 96
 //! Memory to initialize driver
 typedef struct {
 	int bot_id;
@@ -304,6 +314,11 @@ int32_t rsi_udp_client()
     //return status;
   }
 
+	status = rsi_multicast_join(FLAGS, (int8_t *)&multicast_ip);
+  if(status != RSI_SUCCESS)
+  {
+    return status;
+  }
 	if ((he = gethostbyname (wifi_setup->host_name)) == NULL) {
     	goto Find_Host;
         //perror ("gethostbyname");
@@ -328,7 +343,8 @@ int32_t rsi_udp_client()
   server_addr.sin_port = htons(SERVER_PORT);
 	Find_Host:
 	
-	server_addr.sin_addr = * ((struct in_addr *) he-> h_addr_list[0]);
+	//server_addr.sin_addr = * ((struct in_addr *) he-> h_addr_list[0]);
+	server_addr.sin_addr.s_addr = MULTICAST_GROUP_ADDRESS;
   return 0;
 }
 
@@ -443,12 +459,17 @@ int main()
   sender.send_buffer[46] = 100;
   sender.send_buffer[47] = 100;
 	//--------------------------------------------------------------
+	status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
+	status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
+	status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
+	RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
   while(1)
   {
 		if (pack_received == 1){
 			pack_received = 0;
 			memcpy(testdata_out, SPI_buff, pack_length);
 			if(spi_event){
+				RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
 				spi_event = false;
 				SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE); 
 			
@@ -461,8 +482,12 @@ int main()
 				
 				/* SS line = ACTIVE = LOW */
 				SPIdrv->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-				rsi_delay_ms(10);
-		}
+				RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
+				//rsi_delay_ms(10);
+			}
+			RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
+				//memcpy(sender.send_buffer, testdata_in, pack_length);
+		//status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
 		}
 		memcpy(sender.send_buffer, testdata_in, pack_length);
 		status = RSI_bsd_sendto(client_socket, &sender, (sizeof(sender)), 0, (struct rsi_sockaddr *)&server_addr, sizeof(server_addr));
@@ -477,7 +502,7 @@ int main()
 		spi_done = 0;*/
 		
     //! event loop 
-		RSI_EGPIO_IntUnMask(EGPIO1 , ULP_PIN_INT);
+		
     rsi_wireless_driver_task();
 		
   }
